@@ -57,7 +57,7 @@ namespace DataStructures.Trees.BinaryTrees
                 RemoveTwoChildrenNode(treeElement);
             }
         }
-        // MEGFORDÍTANI AZ ÖSSZESNÉL A FELTÉTELEKET!
+
         private void RemoveTwoChildrenNode(TreeElement treeElement)
         {
             while (!(treeElement.Right == null || treeElement.Left == null))

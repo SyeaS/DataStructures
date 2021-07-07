@@ -9,7 +9,7 @@ namespace DataStructures.Trees.BinaryTrees
 {
     public sealed class MinTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
+        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
         public MinTreapTree(RandomGenerator randomGenerator, TComparableWrapper maxValue) : base(maxValue, randomGenerator)
@@ -103,6 +103,11 @@ namespace DataStructures.Trees.BinaryTrees
             T copy = root.TreeContent.Content;
             Remove(ref root);
             return copy;
+        }
+
+        public override IEnumerable<TNumber> InOrderByPriority()
+        {
+            throw new NotImplementedException();
         }
     }
 }

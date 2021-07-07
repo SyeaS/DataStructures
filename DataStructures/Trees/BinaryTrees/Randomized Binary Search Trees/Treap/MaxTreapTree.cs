@@ -1,4 +1,5 @@
-﻿using DataStructures.Wrappers;
+﻿using DataStructures.Heaps;
+using DataStructures.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DataStructures.Trees.BinaryTrees
 {
     public sealed class MaxTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
+        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
         public MaxTreapTree(RandomGenerator randomGenerator, TComparableWrapper minValue) : base(minValue, randomGenerator)
@@ -104,6 +105,61 @@ namespace DataStructures.Trees.BinaryTrees
             T copy = root.TreeContent.Content;
             Remove(ref root);
             return copy;
+        }
+
+        public override IEnumerable<TComparableWrapper> InOrderByPriority()
+        {
+            if (Count == 0)
+            {
+                yield break;
+            }
+
+            BinaryMaxHeap<TupleWrapper> maxHeap = new BinaryMaxHeap<TupleWrapper>();
+            TreeElement current = root;
+            yield return GetPriority(current);
+            TreeElement last = SelectSmallest(ref current, ref maxHeap);
+
+            while (!(maxHeap.Count == 0 && current is null))
+            {
+
+            }
+        }
+
+        private TreeElement SelectSmallest(ref TreeElement treeElement, ref BinaryMaxHeap<TupleWrapper> maxHeap)
+        {
+            if (treeElement.Right == null && treeElement.Left != null)
+            {
+                return treeElement.Left;
+            }
+            else if (treeElement.Left == null && treeElement.Right != null)
+            {
+                return treeElement.Right;
+            }
+
+            TComparableWrapper right = GetPriority(treeElement.Right);
+            TComparableWrapper left = GetPriority(treeElement.Left);
+            int value = right.CompareTo(left);
+
+            if (value > 0)
+            {
+                maxHeap.Add(new TupleWrapper(treeElement.Left, left));
+                return treeElement.Right;
+                // nagyobb
+            }
+            else if (value < 0)
+            {
+                maxHeap.Add(new TupleWrapper(treeElement.Right, right));
+                return treeElement.Left;
+                // kisebb
+            }
+
+            // egyenlő
+            return HandleDuplicates(ref treeElement, ref maxHeap);
+        }
+
+        private TreeElement HandleDuplicates(ref TreeElement treeElement, ref BinaryMaxHeap<TupleWrapper> maxHeap)
+        {
+            return SelectSmallest(ref treeElement, ref maxHeap);
         }
     }
 }

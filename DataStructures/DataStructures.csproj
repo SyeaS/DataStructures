@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>DataStructures</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Heaps\Extensions\" />
+    <Folder Include="PriorityQueue\Abstract classes\" />
+    <Folder Include="PriorityQueue\Exceptions\" />
+    <Folder Include="PriorityQueue\Extensions\" />
+    <Folder Include="Trees\BinaryTrees\Extensions\" />
+    <Folder Include="HashTable\Extensions\" />
+    <Folder Include="Wrappers\Exceptions\" />
+    <Folder Include="Wrappers\Extensions\" />
+  </ItemGroup>
+</Project>

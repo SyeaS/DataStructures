@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class Stack<TContent> : DoublyLinkedList<TContent>, ILinear<TContent>
+    public class Stack<T> : DoublyLinkedList<T>, ILinear<T>
     {
         protected override ListElement Tail => head?.Previous;
 
@@ -16,21 +16,21 @@ namespace DataStructures.LinkedList
 
         }
 
-        public Stack(IEnumerable<TContent> content) : this()
+        public Stack(IEnumerable<T> content) : this()
         {
             base.CreateLinkedList(content);
         }
 
-        private static Stack<TContent> CreateEmptyStack()
+        private static Stack<T> CreateEmptyStack()
         {
-            return new Stack<TContent>();
+            return new Stack<T>();
         }
 
         /// <summary>
         /// Adds an element to the top of the linked list.
         /// </summary>
         /// <param name="content"></param>
-        protected override void InternalAdd(ref TContent content)
+        protected override void InternalAdd(ref T content)
         {
             AddToStack(ref content);
         }
@@ -39,12 +39,12 @@ namespace DataStructures.LinkedList
         /// Adds an element to the top of the linked list.
         /// </summary>
         /// <param name="content"></param>
-        public void Push(TContent content)
+        public void Push(T content)
         {
             base.Add(content);
         }
 
-        private void AddToStack(ref TContent content)
+        private void AddToStack(ref T content)
         {
             ListElement listElement = new ListElement(content);
 
@@ -66,7 +66,7 @@ namespace DataStructures.LinkedList
         /// </summary>
         /// <param name="content"></param>
         /// <exception cref="NotSupportedException"></exception>
-        protected override void InternalRemove(ref TContent content)
+        protected override void InternalRemove(ref T content)
         {
             throw new NotSupportedException("The remove operation for Stack is not supported.");
         }
@@ -85,14 +85,14 @@ namespace DataStructures.LinkedList
         /// Removes an element from the top of the linked list.
         /// </summary>
         /// <returns></returns>
-        public TContent Pop()
+        public T Pop()
         {
             if (_count == 0)
             {
                 throw new EmptyLinkedListException();
             }
 
-            TContent content;
+            T content;
 
             if (_count == 1)
             {
@@ -111,7 +111,7 @@ namespace DataStructures.LinkedList
             return content;
         }
 
-        public TContent Peek()
+        public T Peek()
         {
             if (tail == null)
             {
@@ -121,12 +121,12 @@ namespace DataStructures.LinkedList
             return tail.Content;
         }
 
-        public TContent Remove()
+        public T Remove()
         {
             return Pop();
         }
 
-        public override bool Equals(DoublyLinkedList<TContent> other)
+        public override bool Equals(DoublyLinkedList<T> other)
         {
             return other == this;
         }

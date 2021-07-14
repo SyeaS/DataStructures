@@ -11,6 +11,7 @@ namespace DataStructures.PriorityQueue
         where T : class, IComparable<T>
     {
         BinaryMinHeap<T> minHeap;
+        public int Count => minHeap.Count;
 
         public MinPriorityQueue()
         {

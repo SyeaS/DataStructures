@@ -390,18 +390,6 @@ namespace DataStructures.Trees.BinaryTrees
             return true;
         }
 
-        public void Dispose()
-        {
-            root = null;
-            _count = 0;
-        }
-
-        public void Clear()
-        {
-            root = null;
-            _count = 0;
-        }
-
         public void CopyTo(Array array, int index)
         {
             foreach (T item in DefaultIterator)
@@ -432,16 +420,91 @@ namespace DataStructures.Trees.BinaryTrees
             }
         }
 
-        public abstract IEnumerable<T> InOrder();
-        public abstract IEnumerable<T> PreOrder();
-        public abstract IEnumerable<T> PostOrder();
-        public abstract IEnumerable<T> BreadthFirst();
-        public abstract IEnumerable<T> DepthFirst();
-        public abstract void InOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void PreOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void PostOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void BreadthFirst(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void DepthFirst(ITraversableTree<T>.TraversaryDelegate method);
+        public IEnumerable<T> InOrder()
+        {
+            foreach (TreeElement treeElement in InternalInOrder())
+            {
+                yield return treeElement.TreeContent.Content;
+            }
+        }
+
+        public IEnumerable<T> PreOrder()
+        {
+            foreach (TreeElement treeElement in InternalPreOrder())
+            {
+                yield return treeElement.TreeContent.Content;
+            }
+        }
+
+        public IEnumerable<T> PostOrder()
+        {
+            foreach (TreeElement treeElement in InternalPostOrder())
+            {
+                yield return treeElement.TreeContent.Content;
+            }
+        }
+
+        public IEnumerable<T> BreadthFirst()
+        {
+            foreach (TreeElement treeElement in InternalBreadthFirst())
+            {
+                yield return treeElement.TreeContent.Content;
+            }
+        }
+
+        public IEnumerable<T> DepthFirst()
+        {
+            foreach (TreeElement treeElement in InternalDepthFirst())
+            {
+                yield return treeElement.TreeContent.Content;
+            }
+        }
+
+        public void InOrder(ITraversableTree<T>.TraversaryDelegate method)
+        {
+            foreach (T item in InOrder())
+            {
+                method(item);
+            }
+        }
+
+        public void PreOrder(ITraversableTree<T>.TraversaryDelegate method)
+        {
+            foreach (T item in PreOrder())
+            {
+                method(item);
+            }
+        }
+
+        public void PostOrder(ITraversableTree<T>.TraversaryDelegate method)
+        {
+            foreach (T item in PostOrder())
+            {
+                method(item);
+            }
+        }
+
+        public void BreadthFirst(ITraversableTree<T>.TraversaryDelegate method)
+        {
+            foreach (T item in BreadthFirst())
+            {
+                method(item);
+            }
+        }
+
+        public void DepthFirst(ITraversableTree<T>.TraversaryDelegate method)
+        {
+            foreach (T item in DepthFirst())
+            {
+                method(item);
+            }
+        }
+
+        protected abstract IEnumerable<TreeElement> InternalInOrder();
+        protected abstract IEnumerable<TreeElement> InternalPreOrder();
+        protected abstract IEnumerable<TreeElement> InternalPostOrder();
+        protected abstract IEnumerable<TreeElement> InternalBreadthFirst();
+        protected abstract IEnumerable<TreeElement> InternalDepthFirst();
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -451,6 +514,18 @@ namespace DataStructures.Trees.BinaryTrees
         IEnumerator IEnumerable.GetEnumerator()
         {
             return DefaultIterator.GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            root = null;
+            _count = 0;
+        }
+
+        public void Clear()
+        {
+            root = null;
+            _count = 0;
         }
     }
 }

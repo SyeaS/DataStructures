@@ -1,4 +1,5 @@
-﻿using DataStructures.Wrappers;
+﻿using DataStructures.Heaps;
+using DataStructures.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,9 +106,21 @@ namespace DataStructures.Trees.BinaryTrees
             return copy;
         }
 
-        public override IEnumerable<TNumber> InOrderByPriority()
+        public override IEnumerable<TComparableWrapper> InOrderByPriority()
         {
-            throw new NotImplementedException();
+            BinaryMinHeap<TComparableWrapper> minHeap = new BinaryMinHeap<TComparableWrapper>(this.Count);
+
+            foreach (TreeElement treeElement in this.InternalPreOrder())
+            {
+                minHeap.Add(treeElement.TreeContent.Priority);
+            }
+
+            int count = minHeap.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return minHeap.Extract();
+            }
         }
     }
 }

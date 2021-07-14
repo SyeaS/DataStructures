@@ -9,6 +9,8 @@ namespace DataStructures.PriorityQueue
     public interface IMinPriorityQueue<T>
         where T : IComparable<T>
     {
+        int Count { get; }
+
         void Add(T content);
         T PopMin();
         T PeekMin();

@@ -13,6 +13,5 @@
     <Folder Include="Trees\BinaryTrees\Extensions\" />
     <Folder Include="HashTable\Extensions\" />
     <Folder Include="Wrappers\Exceptions\" />
-    <Folder Include="Wrappers\Extensions\" />
   </ItemGroup>
 </Project>

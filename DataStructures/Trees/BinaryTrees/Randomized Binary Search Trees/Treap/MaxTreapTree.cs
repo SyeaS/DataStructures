@@ -1,4 +1,5 @@
 ﻿using DataStructures.Heaps;
+using DataStructures.PriorityQueue;
 using DataStructures.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -109,31 +110,45 @@ namespace DataStructures.Trees.BinaryTrees
 
         public override IEnumerable<TComparableWrapper> InOrderByPriority()
         {
-            if (Count == 0)
+            BinaryMaxHeap<TComparableWrapper> maxHeap = new BinaryMaxHeap<TComparableWrapper>(this.Count);
+            
+            foreach (TreeElement treeElement in this.InternalPreOrder())
+            {
+                maxHeap.Add(treeElement.TreeContent.Priority);
+            }
+
+            int count = maxHeap.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return maxHeap.Extract();
+            }
+
+            /*if (Count == 0)
             {
                 yield break;
             }
 
-            BinaryMaxHeap<TupleWrapper> maxHeap = new BinaryMaxHeap<TupleWrapper>();
+            MaxPriorityQueue<TupleWrapper> priorityQueue = new MaxPriorityQueue<TupleWrapper>();
             TreeElement current = root;
             yield return GetPriority(current);
-            TreeElement last = SelectSmallest(ref current, ref maxHeap);
+            SelectSmallest(ref current, ref priorityQueue);
 
-            while (!(maxHeap.Count == 0 && current is null))
+            while (!(priorityQueue.Count == 0 && current is null))
             {
 
-            }
+            }*/
         }
 
-        private TreeElement SelectSmallest(ref TreeElement treeElement, ref BinaryMaxHeap<TupleWrapper> maxHeap)
+        /*private void SelectSmallest(ref TreeElement treeElement, ref MaxPriorityQueue<TupleWrapper> priorityQueue)
         {
             if (treeElement.Right == null && treeElement.Left != null)
             {
-                return treeElement.Left;
+                treeElement = treeElement.Left;
             }
             else if (treeElement.Left == null && treeElement.Right != null)
             {
-                return treeElement.Right;
+                treeElement = treeElement.Right;
             }
 
             TComparableWrapper right = GetPriority(treeElement.Right);
@@ -142,24 +157,17 @@ namespace DataStructures.Trees.BinaryTrees
 
             if (value > 0)
             {
-                maxHeap.Add(new TupleWrapper(treeElement.Left, left));
-                return treeElement.Right;
-                // nagyobb
+                priorityQueue.Add(new TupleWrapper(treeElement.Left, left));
+                treeElement = treeElement.Right;
             }
             else if (value < 0)
             {
-                maxHeap.Add(new TupleWrapper(treeElement.Right, right));
-                return treeElement.Left;
-                // kisebb
+                priorityQueue.Add(new TupleWrapper(treeElement.Right, right));
+                treeElement = treeElement.Left;
             }
 
             // egyenlő
-            return HandleDuplicates(ref treeElement, ref maxHeap);
-        }
-
-        private TreeElement HandleDuplicates(ref TreeElement treeElement, ref BinaryMaxHeap<TupleWrapper> maxHeap)
-        {
-            return SelectSmallest(ref treeElement, ref maxHeap);
-        }
+            //return HandleDuplicates(ref treeElement, ref priorityQueue);
+        }*/
     }
 }

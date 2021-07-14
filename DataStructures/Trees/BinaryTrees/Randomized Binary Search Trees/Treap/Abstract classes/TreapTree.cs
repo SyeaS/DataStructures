@@ -12,26 +12,6 @@ namespace DataStructures.Trees.BinaryTrees
         where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
-        protected class TupleWrapper : IComparable<TupleWrapper>
-        {
-            private (TreeElement, TComparableWrapper) tuple;
-
-            public TupleWrapper(TreeElement treeElement, TComparableWrapper wrapper)
-            {
-                this.tuple = (treeElement, wrapper);
-            }
-
-            public TComparableWrapper GetValue()
-            {
-                return tuple.Item2;
-            }
-
-            public int CompareTo(TupleWrapper other)
-            {
-                return this.GetValue().CompareTo(other.GetValue());
-            }
-        }
-
         protected TComparableWrapper Value { get; }
 
         public delegate TComparableWrapper RandomGenerator();

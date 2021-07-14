@@ -7,23 +7,16 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class Stack<T> : DoublyLinkedList<T>, ILinear<T>
+    public class Stack<T> : SinglyLinkedList<T>, ILinear<T>
     {
-        protected override ListElement Tail => head?.Previous;
-
-        public Stack() : base(new EmptyLinkedListInitializer(CreateEmptyStack))
+        public Stack()
         {
 
         }
 
-        public Stack(IEnumerable<T> content) : this()
+        public Stack(IEnumerable<T> content)
         {
-            base.CreateLinkedList(content);
-        }
-
-        private static Stack<T> CreateEmptyStack()
-        {
-            return new Stack<T>();
+            base.CreateFromIEnumerable(ref content);
         }
 
         /// <summary>
@@ -46,19 +39,9 @@ namespace DataStructures.LinkedList
 
         private void AddToStack(ref T content)
         {
-            ListElement listElement = new ListElement(content);
-
-            if (head == null)
-            {
-                head = listElement;
-                tail = head;
-            }
-            else
-            {
-                tail.Next = listElement;
-                listElement.Previous = tail;
-                tail = tail.Next;
-            }
+            ListElement listElement = new ListElement(ref content);
+            listElement.Next = Head;
+            head = listElement;
         }
 
         /// <summary>
@@ -87,48 +70,31 @@ namespace DataStructures.LinkedList
         /// <returns></returns>
         public T Pop()
         {
-            if (_count == 0)
+            if (Count == 0)
             {
                 throw new EmptyLinkedListException();
             }
 
-            T content;
+            T content = Head.Content;
+            head = Head.Next;
 
-            if (_count == 1)
-            {
-                content = head.Content;
-                head = null;
-                tail = null;
-            }
-            else
-            {
-                content = tail.Content;
-                tail.Previous.Next = null;
-                tail = tail.Previous;
-            }
-
-            _count--;
+            Count--;
             return content;
         }
 
         public T Peek()
         {
-            if (tail == null)
+            if (Head == null)
             {
                 throw new EmptyLinkedListException();
             }
 
-            return tail.Content;
+            return Head.Content;
         }
 
         public T Remove()
         {
             return Pop();
-        }
-
-        public override bool Equals(DoublyLinkedList<T> other)
-        {
-            return other == this;
         }
     }
 }

@@ -23,11 +23,6 @@ namespace DataStructures.Trees.BinaryTrees
                 TreeContent = new TTreeContent();
                 TreeContent.Content = content;
             }
-
-            public TreeElement(TTreeContent content)
-            {
-                TreeContent = content;
-            }
         }
 
         protected TreeElement root;

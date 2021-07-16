@@ -99,7 +99,7 @@ namespace DataStructures.Trees.BinaryTrees
         public T PopMaxPriority()
         {
             T copy = root.TreeContent.Content;
-            Remove(ref root);
+            Remove(copy);
             return copy;
         }
 

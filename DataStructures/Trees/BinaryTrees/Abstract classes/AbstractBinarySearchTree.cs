@@ -11,16 +11,15 @@ namespace DataStructures.Trees.BinaryTrees
         where T : IComparable<T>
         where TTreeElement : ITreeContent<T>, new()
     {
-        protected override IEnumerable<T> DefaultIterator => InOrder();
+        protected override IEnumerable<T> DefaultEnumerator => InternalInOrder() as IEnumerable<T>;
 
         public AbstractBinarySearchTree()
         {
-
         }
 
-        public AbstractBinarySearchTree(IEnumerable<T> content) : base(content)
+        public AbstractBinarySearchTree(IEnumerable<T> content)
         {
-
+            base.CreateFromIEnumerable(ref content);
         }
 
         protected override TreeElement InternalAdd(ref T content)
@@ -272,136 +271,158 @@ namespace DataStructures.Trees.BinaryTrees
             return treeElement;
         }
 
-        protected override IEnumerable<TreeElement> InternalInOrder()
+        protected override TreeElement MoveInOrderEnumerator(ref InOrderData data)
         {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
+            if (data.stack.Count != 0)
+            {
+                TreeElement treeElement = data.stack.Pop();
+                data.processed.Add(treeElement.TreeContent.Content);
+
+                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
+                {
+                    data.stack.Push(treeElement.Left);
+                }
+                if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
+                {
+                    data.stack.Push(treeElement.Right);
+                }
+
+                return treeElement;
+            }
+
+            data.processed.Dispose();
+            data.stack.Dispose();
+            return null;
+        }
+
+        protected override void InitializeInOrderEnumerator(ref InOrderData data)
+        {
             TreeElement m = root;
 
             while (m != null)
             {
-                stack.Push(m);
+                data.stack.Push(m);
                 m = m.Left;
             }
-
-            while (stack.Count != 0)
-            {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement;
-                processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Left);
-                }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Right);
-                }
-            }
-
-            processed.Dispose();
         }
 
-        protected override IEnumerable<TreeElement> InternalPreOrder()
+        protected override TreeElement MovePreOrderEnumerator(ref PreOrderData data)
         {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
-            stack.Push(root);
-
-            while (stack.Count != 0)
+            if (data.stack.Count != 0)
             {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement;
-                processed.Add(treeElement.TreeContent.Content);
+                TreeElement treeElement = data.stack.Pop();
+                data.processed.Add(treeElement.TreeContent.Content);
 
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
+                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
                 {
-                    stack.Push(treeElement.Left);
+                    data.stack.Push(treeElement.Left);
                 }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
+                if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
                 {
-                    stack.Push(treeElement.Right);
+                    data.stack.Push(treeElement.Right);
                 }
+                return treeElement;
             }
 
-            processed.Dispose();
+            data.processed.Dispose();
+            data.stack.Dispose();
+            return null;
         }
 
-        protected override IEnumerable<TreeElement> InternalPostOrder()
+        protected override void InitializePreOrderEnumerator(ref PreOrderData data)
         {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
-            stack.Push(root);
+            data.stack.Push(root);
+        }
+
+        protected override TreeElement MovePostOrderEnumerator(ref PostOrderData data)
+        {
+            if (data.stack.Count != 0)
+            {
+                TreeElement treeElement = data.stack.Pop();
+                data.processed.Add(treeElement.TreeContent.Content);
+
+                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
+                {
+                    data.stack.Push(treeElement.Left);
+                }
+                if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
+                {
+                    data.stack.Push(treeElement.Right);
+                }
+
+                return treeElement;
+            }
+
+            data.processed.Dispose();
+            data.stack.Dispose();
+            return null;
+        }
+
+        protected override void InitializePostOrderEnumerator(ref PostOrderData data)
+        {
+            data.stack.Push(root);
 
             if (root.Left != null)
             {
-                stack.Push(root.Left);
+                data.stack.Push(root.Left);
             }
             if (root.Right != null)
             {
-                stack.Push(root.Right);
-            }
-
-            while (stack.Count != 0)
-            {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement;
-                processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Left);
-                }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Right);
-                }
-            }
-
-            processed.Dispose();
-        }
-
-        protected override IEnumerable<TreeElement> InternalBreadthFirst()
-        {
-            LinkedList.Queue<TreeElement> queue = new LinkedList.Queue<TreeElement>();
-            queue.Enqueue(root);
-
-            while (queue.Count != 0)
-            {
-                TreeElement actualTreeElement = queue.Dequeue();
-                yield return actualTreeElement;
-
-                if (actualTreeElement.Left != null)
-                {
-                    queue.Enqueue(actualTreeElement.Left);
-                }
-                if (actualTreeElement.Right != null)
-                {
-                    queue.Enqueue(actualTreeElement.Right);
-                }
+                data.stack.Push(root.Right);
             }
         }
 
-        protected override IEnumerable<TreeElement> InternalDepthFirst()
+        protected override TreeElement MoveBreadthFirstEnumerator(ref BreadthFirstData data)
         {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            stack.Push(root);
-
-            while (stack.Count != 0)
+            if (data.queue.Count != 0)
             {
-                TreeElement actualTreeElement = stack.Pop();
-                yield return actualTreeElement;
+                TreeElement treeElement = data.queue.Dequeue();
+
+                if (treeElement.Left != null)
+                {
+                    data.queue.Enqueue(treeElement.Left);
+                }
+                if (treeElement.Right != null)
+                {
+                    data.queue.Enqueue(treeElement.Right);
+                }
+
+                return treeElement;
+            }
+
+            data.queue.Dispose();
+            return null;
+        }
+
+        protected override void InitializeBreadthFirstEnumerator(ref BreadthFirstData data)
+        {
+            data.queue.Enqueue(root);
+        }
+
+        protected override TreeElement MoveDepthFirstEnumerator(ref DepthFirstData data)
+        {
+            if (data.stack.Count != 0)
+            {
+                TreeElement actualTreeElement = data.stack.Pop();
 
                 if (actualTreeElement.Right != null)
                 {
-                    stack.Push(actualTreeElement.Right);
+                    data.stack.Push(actualTreeElement.Right);
                 }
                 if (actualTreeElement.Left != null)
                 {
-                    stack.Push(actualTreeElement.Left);
+                    data.stack.Push(actualTreeElement.Left);
                 }
+
+                return actualTreeElement;
             }
+
+            return null;
+        }
+
+        protected override void InitializeDepthFirstEnumerator(ref DepthFirstData data)
+        {
+            data.stack.Push(root);
         }
     }
 }

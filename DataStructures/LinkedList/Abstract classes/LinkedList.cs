@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public abstract class LinkedList<T> : ICollection<T>, ICollection, IEquatable<LinkedList<T>>
+    public abstract class LinkedList<T> : ICollection<T>, ICollection, IEquatable<LinkedList<T>>, IDisposable
     {
         protected class ListElement : IListElement
         {
@@ -234,6 +234,11 @@ namespace DataStructures.LinkedList
             Count = 0;
         }
 
+        public virtual void Dispose()
+        {
+            Count = 0;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return new Enumerator(this);
@@ -249,7 +254,7 @@ namespace DataStructures.LinkedList
             return this == other;
         }
 
-        public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator
+        struct Enumerator : IEnumerator<T>, IEnumerator, IDisposable
         {
             private IListElement Head { get; }
             private IListElement current;

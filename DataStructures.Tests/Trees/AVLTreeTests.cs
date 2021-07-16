@@ -222,9 +222,9 @@ namespace DataStructures.Tests
         {
             AVLTree<double> AVLTree = new AVLTree<double>(values);
             List<double> inorder = new List<double>();
-            AVLTree.InOrder((item) => { inorder.Add(item); });
+            //AVLTree.InOrder((item) => { inorder.Add(item); });
 
-            inorder = new List<double>();
+            //inorder = new List<double>();
 
             foreach (double item in AVLTree.InOrder())
             {
@@ -238,9 +238,9 @@ namespace DataStructures.Tests
         {
             AVLTree<double> AVLTree = new AVLTree<double>(values);
             List<double> preorder = new List<double>();
-            AVLTree.PreOrder((item) => { preorder.Add(item); });
+            //AVLTree.PreOrder((item) => { preorder.Add(item); });
 
-            preorder = new List<double>();
+            //preorder = new List<double>();
 
             foreach (double item in AVLTree.PreOrder())
             {
@@ -254,9 +254,9 @@ namespace DataStructures.Tests
         {
             AVLTree<double> AVLTree = new AVLTree<double>(values);
             List<double> postorder = new List<double>();
-            AVLTree.PostOrder((item) => { postorder.Add(item); });
+            //AVLTree.PostOrder((item) => { postorder.Add(item); });
 
-            postorder = new List<double>();
+            //postorder = new List<double>();
 
             foreach (double item in AVLTree.PostOrder())
             {
@@ -270,9 +270,9 @@ namespace DataStructures.Tests
         {
             AVLTree<double> AVLTree = new AVLTree<double>(values);
             List<double> breadthFirst = new List<double>();
-            AVLTree.BreadthFirst((item) => { breadthFirst.Add(item); });
+            //AVLTree.BreadthFirst((item) => { breadthFirst.Add(item); });
 
-            breadthFirst = new List<double>();
+            //breadthFirst = new List<double>();
 
             foreach (double item in AVLTree.BreadthFirst())
             {
@@ -286,9 +286,9 @@ namespace DataStructures.Tests
         {
             AVLTree<double> AVLTree = new AVLTree<double>(values);
             List<double> depthFirst = new List<double>();
-            AVLTree.DepthFirst((item) => { depthFirst.Add(item); });
+            //AVLTree.DepthFirst((item) => { depthFirst.Add(item); });
 
-            depthFirst = new List<double>();
+            //depthFirst = new List<double>();
 
             foreach (double item in AVLTree.DepthFirst())
             {

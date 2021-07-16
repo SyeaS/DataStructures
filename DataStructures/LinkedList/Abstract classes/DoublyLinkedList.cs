@@ -182,6 +182,12 @@ namespace DataStructures.LinkedList
             head = null;
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            head = null;
+        }
+
         public abstract bool Equals(DoublyLinkedList<T> other);
     }
 }

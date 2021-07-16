@@ -60,5 +60,17 @@ namespace DataStructures.LinkedList
         {
             throw new NotSupportedException();
         }
+
+        public override void Clear()
+        {
+            base.Clear();
+            head = null;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            head = null;
+        }
     }
 }

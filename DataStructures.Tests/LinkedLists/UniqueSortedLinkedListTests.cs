@@ -96,8 +96,7 @@ namespace SortedPlayerQueue.Tests
 
             foreach (float item in linkedList)
             {
-                values[index] = item;
-                index++;
+                values[index++] = item;
             }
 
             foreach (float item in values)

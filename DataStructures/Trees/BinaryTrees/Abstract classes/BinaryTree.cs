@@ -25,6 +25,93 @@ namespace DataStructures.Trees.BinaryTrees
             }
         }
 
+        protected interface IDataFactory<TData>
+        {
+            TData CreateEmpty();
+            void Initialize();
+        }
+
+        protected class InOrderData : IDataFactory<InOrderData>
+        {
+            public LinkedList.Stack<TreeElement> stack;
+            public RedBlackTree<T> processed;
+
+            public void Initialize()
+            {
+                stack = new LinkedList.Stack<TreeElement>();
+                processed = new RedBlackTree<T>();
+            }
+
+            public InOrderData CreateEmpty()
+            {
+                return new InOrderData();
+            }
+        }
+
+        protected class PreOrderData : IDataFactory<PreOrderData>
+        {
+            public LinkedList.Stack<TreeElement> stack;
+            public RedBlackTree<T> processed;
+
+            public void Initialize()
+            {
+                stack = new LinkedList.Stack<TreeElement>();
+                processed = new RedBlackTree<T>();
+            }
+
+            public PreOrderData CreateEmpty()
+            {
+                return new PreOrderData();
+            }
+        }
+
+        protected class PostOrderData : IDataFactory<PostOrderData>
+        {
+            public LinkedList.Stack<TreeElement> stack;
+            public RedBlackTree<T> processed;
+
+            public void Initialize()
+            {
+                stack = new LinkedList.Stack<TreeElement>();
+                processed = new RedBlackTree<T>();
+            }
+
+            public PostOrderData CreateEmpty()
+            {
+                return new PostOrderData();
+            }
+        }
+
+        protected class BreadthFirstData : IDataFactory<BreadthFirstData>
+        {
+            public LinkedList.Queue<TreeElement> queue;
+
+            public void Initialize()
+            {
+                queue = new LinkedList.Queue<TreeElement>();
+            }
+
+            public BreadthFirstData CreateEmpty()
+            {
+                return new BreadthFirstData();
+            }
+        }
+
+        protected class DepthFirstData : IDataFactory<DepthFirstData>
+        {
+            public LinkedList.Stack<TreeElement> stack;
+
+            public void Initialize()
+            {
+                stack = new LinkedList.Stack<TreeElement>();
+            }
+
+            public DepthFirstData CreateEmpty()
+            {
+                return new DepthFirstData();
+            }
+        }
+
         protected TreeElement root;
         private int _count = 0;
         public int Count => _count;
@@ -33,7 +120,7 @@ namespace DataStructures.Trees.BinaryTrees
         public bool IsSynchronized => false;
         public object SyncRoot { get; } = new object();
 
-        protected abstract IEnumerable<T> DefaultIterator { get; }
+        protected abstract IEnumerable<T> DefaultEnumerator { get; }
 
         public BinaryTree()
         {
@@ -387,7 +474,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         public void CopyTo(Array array, int index)
         {
-            foreach (T item in DefaultIterator)
+            foreach (T item in DefaultEnumerator)
             {
                 try
                 {
@@ -402,7 +489,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            foreach (T item in DefaultIterator)
+            foreach (T item in DefaultEnumerator)
             {
                 try
                 {
@@ -417,42 +504,27 @@ namespace DataStructures.Trees.BinaryTrees
 
         public IEnumerable<T> InOrder()
         {
-            foreach (TreeElement treeElement in InternalInOrder())
-            {
-                yield return treeElement.TreeContent.Content;
-            }
+            return InternalInOrder().DefaultEnumerator;
         }
 
         public IEnumerable<T> PreOrder()
         {
-            foreach (TreeElement treeElement in InternalPreOrder())
-            {
-                yield return treeElement.TreeContent.Content;
-            }
+            return InternalPreOrder().DefaultEnumerator;
         }
 
         public IEnumerable<T> PostOrder()
         {
-            foreach (TreeElement treeElement in InternalPostOrder())
-            {
-                yield return treeElement.TreeContent.Content;
-            }
+            return InternalPostOrder().DefaultEnumerator;
         }
 
         public IEnumerable<T> BreadthFirst()
         {
-            foreach (TreeElement treeElement in InternalBreadthFirst())
-            {
-                yield return treeElement.TreeContent.Content;
-            }
+            return InternalBreadthFirst().DefaultEnumerator;
         }
 
         public IEnumerable<T> DepthFirst()
         {
-            foreach (TreeElement treeElement in InternalDepthFirst())
-            {
-                yield return treeElement.TreeContent.Content;
-            }
+            return InternalDepthFirst().DefaultEnumerator;
         }
 
         public void InOrder(ITraversableTree<T>.TraversaryDelegate method)
@@ -495,32 +567,148 @@ namespace DataStructures.Trees.BinaryTrees
             }
         }
 
-        protected abstract IEnumerable<TreeElement> InternalInOrder();
-        protected abstract IEnumerable<TreeElement> InternalPreOrder();
-        protected abstract IEnumerable<TreeElement> InternalPostOrder();
-        protected abstract IEnumerable<TreeElement> InternalBreadthFirst();
-        protected abstract IEnumerable<TreeElement> InternalDepthFirst();
+        protected abstract TreeElement MoveInOrderEnumerator(ref InOrderData data);
+        protected abstract void InitializeInOrderEnumerator(ref InOrderData data);
+        protected Enumerator<InOrderData> InternalInOrder()
+        {
+            InOrderData data = new InOrderData();
+            return new Enumerator<InOrderData>(ref data, MoveInOrderEnumerator,
+                InitializeInOrderEnumerator, this);
+        }
+
+        protected abstract TreeElement MovePreOrderEnumerator(ref PreOrderData data);
+        protected abstract void InitializePreOrderEnumerator(ref PreOrderData data);
+        protected Enumerator<PreOrderData> InternalPreOrder()
+        {
+            PreOrderData data = new PreOrderData();
+            return new Enumerator<PreOrderData>(ref data, MovePreOrderEnumerator,
+                InitializePreOrderEnumerator, this);
+        }
+
+        protected abstract TreeElement MovePostOrderEnumerator(ref PostOrderData data);
+        protected abstract void InitializePostOrderEnumerator(ref PostOrderData data);
+        protected Enumerator<PostOrderData> InternalPostOrder()
+        {
+            PostOrderData data = new PostOrderData();
+            return new Enumerator<PostOrderData>(ref data, MovePostOrderEnumerator,
+                InitializePostOrderEnumerator, this);
+        }
+
+        protected abstract TreeElement MoveBreadthFirstEnumerator(ref BreadthFirstData data);
+        protected abstract void InitializeBreadthFirstEnumerator(ref BreadthFirstData data);
+        protected Enumerator<BreadthFirstData> InternalBreadthFirst()
+        {
+            BreadthFirstData data = new BreadthFirstData();
+            return new Enumerator<BreadthFirstData>(ref data, MoveBreadthFirstEnumerator,
+                InitializeBreadthFirstEnumerator, this);
+        }
+
+        protected abstract TreeElement MoveDepthFirstEnumerator(ref DepthFirstData data);
+        protected abstract void InitializeDepthFirstEnumerator(ref DepthFirstData data);
+        protected Enumerator<DepthFirstData> InternalDepthFirst()
+        {
+            DepthFirstData data = new DepthFirstData();
+            return new Enumerator<DepthFirstData>(ref data, MoveDepthFirstEnumerator,
+                InitializeDepthFirstEnumerator, this);
+        }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return DefaultIterator.GetEnumerator();
+            return DefaultEnumerator.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return DefaultIterator.GetEnumerator();
+            return DefaultEnumerator.GetEnumerator();
         }
 
         public void Dispose()
         {
             root = null;
             _count = 0;
+            GC.SuppressFinalize(this);
         }
 
         public void Clear()
         {
             root = null;
             _count = 0;
+        }
+
+        protected Enumerator<TData> CreateEnumerator<TData>(TData data, Enumerator<TData>.MoveEnumerator move, Enumerator<TData>.InitializeEnumerator initialize, BinaryTree<T, TTreeContent> binaryTree)
+            where TData : IDataFactory<TData>
+        {
+            return new Enumerator<TData>(ref data, move, initialize, binaryTree);
+        }
+
+        protected Enumerator<TData> CreateEnumerator<TData>(ref TData data, ref Enumerator<TData>.MoveEnumerator move, ref Enumerator<TData>.InitializeEnumerator initialize, ref BinaryTree<T, TTreeContent> binaryTree)
+            where TData : IDataFactory<TData>
+        {
+            return new Enumerator<TData>(ref data, move, initialize, binaryTree);
+        }
+
+        protected struct Enumerator<TData> : IEnumerator<TreeElement>, IEnumerator<T>, IEnumerator, IEnumerable<TreeElement>, IEnumerable<T>, IDisposable
+            where TData : IDataFactory<TData>
+        {
+            //public T Current => current.TreeContent.Content ?? default(T);
+            public TreeElement Current => current;
+            T IEnumerator<T>.Current => current.TreeContent.Content;
+            object IEnumerator.Current => current as object;
+            private TreeElement current;
+
+            public IEnumerable<T> DefaultEnumerator => this as IEnumerable<T>;
+
+            private TData data;
+
+            public delegate TreeElement MoveEnumerator(ref TData data);
+            private MoveEnumerator Move { get; }
+
+            public delegate void InitializeEnumerator(ref TData data);
+            private InitializeEnumerator Initialize { get; }
+
+            public Enumerator(ref TData data, MoveEnumerator move, InitializeEnumerator initialize, BinaryTree<T, TTreeContent> binaryTree)
+            {
+                this.data = data;
+                Move = move;
+                current = null;
+                data.Initialize();
+                Initialize = initialize;
+                Initialize(ref data);
+            }
+
+            public IEnumerator<TreeElement> GetEnumerator()
+            {
+                return this;
+            }
+
+            IEnumerator<T> IEnumerable<T>.GetEnumerator()
+            {
+                return this;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this;
+            }
+
+            public bool MoveNext()
+            {
+                current = Move(ref data);
+                return current is not null;
+            }
+
+            public void Reset()
+            {
+                current = null;
+                data.Initialize();
+                Initialize(ref data);
+            }
+
+            public void Dispose()
+            {
+                current = null;
+                data = default(TData);
+            }
         }
     }
 }

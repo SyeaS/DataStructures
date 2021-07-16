@@ -201,21 +201,36 @@ namespace DataStructures.Trees.BinaryTrees
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T Pop(T content);
+        public T Pop(T content)
+        {
+            return InternalRemove(ref content).TreeContent.Content;
+        }
 
         /// <summary>
         /// Pops the maximum element from the binary tree.
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T PopMax();
+        public T PopMax()
+        {
+            T max = InternalPopMax();
+            _count--;
+            return max;
+        }
+        protected abstract T InternalPopMax();
 
         /// <summary>
         /// Pops the minimum element from the binary tree.
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T PopMin();
+        public T PopMin()
+        {
+            T min = InternalPopMin();
+            _count--;
+            return min;
+        }
+        protected abstract T InternalPopMin();
 
         protected abstract void DeleteTreeElement(ref TreeElement treeElement);
 

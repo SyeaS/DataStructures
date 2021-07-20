@@ -139,22 +139,6 @@ namespace DataStructures.Tests.Trees
             }
         }
 
-        [Theory]
-        [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
-        public void DepthFirstTest(params double[] values)
-        {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
-            List<double> depthFirst = new List<double>();
-            treapTree.DepthFirst((item) => { depthFirst.Add(item); });
-
-            depthFirst = new List<double>();
-
-            foreach (double item in treapTree.DepthFirst())
-            {
-                depthFirst.Add(item);
-            }
-        }
-
         [Fact]
         public void Add_TimerTest()
         {

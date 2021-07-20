@@ -279,21 +279,5 @@ namespace DataStructures.Tests
                 breadthFirst.Add(item);
             }
         }
-
-        [Theory]
-        [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
-        public void DepthFirstTest(params double[] values)
-        {
-            RedBlackTree<double> RBTree = new RedBlackTree<double>(values);
-            List<double> depthFirst = new List<double>();
-            RBTree.DepthFirst((item) => { depthFirst.Add(item); });
-
-            depthFirst = new List<double>();
-
-            foreach (double item in RBTree.DepthFirst())
-            {
-                depthFirst.Add(item);
-            }
-        }
     }
 }

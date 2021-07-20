@@ -34,12 +34,11 @@ namespace DataStructures.Trees.BinaryTrees
         protected class InOrderData : IDataFactory<InOrderData>
         {
             public LinkedList.Stack<TreeElement> stack;
-            public RedBlackTree<T> processed;
+            public TreeElement current;
 
             public void Initialize()
             {
                 stack = new LinkedList.Stack<TreeElement>();
-                processed = new RedBlackTree<T>();
             }
 
             public InOrderData CreateEmpty()
@@ -69,6 +68,8 @@ namespace DataStructures.Trees.BinaryTrees
         {
             public LinkedList.Stack<TreeElement> stack;
             public RedBlackTree<T> processed;
+            public TreeElement current;
+            public TreeElement previous;
 
             public void Initialize()
             {
@@ -94,21 +95,6 @@ namespace DataStructures.Trees.BinaryTrees
             public BreadthFirstData CreateEmpty()
             {
                 return new BreadthFirstData();
-            }
-        }
-
-        protected class DepthFirstData : IDataFactory<DepthFirstData>
-        {
-            public LinkedList.Stack<TreeElement> stack;
-
-            public void Initialize()
-            {
-                stack = new LinkedList.Stack<TreeElement>();
-            }
-
-            public DepthFirstData CreateEmpty()
-            {
-                return new DepthFirstData();
             }
         }
 
@@ -537,11 +523,6 @@ namespace DataStructures.Trees.BinaryTrees
             return InternalBreadthFirst().DefaultEnumerator;
         }
 
-        public IEnumerable<T> DepthFirst()
-        {
-            return InternalDepthFirst().DefaultEnumerator;
-        }
-
         public void InOrder(ITraversableTree<T>.TraversaryDelegate method)
         {
             foreach (T item in InOrder())
@@ -569,14 +550,6 @@ namespace DataStructures.Trees.BinaryTrees
         public void BreadthFirst(ITraversableTree<T>.TraversaryDelegate method)
         {
             foreach (T item in BreadthFirst())
-            {
-                method(item);
-            }
-        }
-
-        public void DepthFirst(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T item in DepthFirst())
             {
                 method(item);
             }
@@ -618,15 +591,6 @@ namespace DataStructures.Trees.BinaryTrees
                 InitializeBreadthFirstEnumerator, this);
         }
 
-        protected abstract TreeElement MoveDepthFirstEnumerator(ref DepthFirstData data);
-        protected abstract void InitializeDepthFirstEnumerator(ref DepthFirstData data);
-        protected Enumerator<DepthFirstData> InternalDepthFirst()
-        {
-            DepthFirstData data = new DepthFirstData();
-            return new Enumerator<DepthFirstData>(ref data, MoveDepthFirstEnumerator,
-                InitializeDepthFirstEnumerator, this);
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             return DefaultEnumerator.GetEnumerator();
@@ -665,7 +629,6 @@ namespace DataStructures.Trees.BinaryTrees
         protected struct Enumerator<TData> : IEnumerator<TreeElement>, IEnumerator<T>, IEnumerator, IEnumerable<TreeElement>, IEnumerable<T>, IDisposable
             where TData : IDataFactory<TData>
         {
-            //public T Current => current.TreeContent.Content ?? default(T);
             public TreeElement Current => current;
             T IEnumerator<T>.Current => current.TreeContent.Content;
             object IEnumerator.Current => current as object;

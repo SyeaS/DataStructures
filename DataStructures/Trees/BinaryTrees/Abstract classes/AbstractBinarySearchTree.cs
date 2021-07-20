@@ -273,37 +273,28 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected override TreeElement MoveInOrderEnumerator(ref InOrderData data)
         {
-            if (data.stack.Count != 0)
+            while (!data.stack.IsEmpty || data.current is not null)
             {
-                TreeElement treeElement = data.stack.Pop();
-                data.processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
+                if (data.current is not null)
                 {
-                    data.stack.Push(treeElement.Left);
+                    data.stack.Push(data.current);
+                    data.current = data.current.Left;
                 }
-                if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
+                else
                 {
-                    data.stack.Push(treeElement.Right);
+                    TreeElement copy = data.stack.Pop();
+                    data.current = copy.Right;
+                    return copy;
                 }
-
-                return treeElement;
             }
 
-            data.processed.Dispose();
             data.stack.Dispose();
             return null;
         }
 
         protected override void InitializeInOrderEnumerator(ref InOrderData data)
         {
-            TreeElement m = root;
-
-            while (m != null)
-            {
-                data.stack.Push(m);
-                m = m.Left;
-            }
+            data.current = root;
         }
 
         protected override TreeElement MovePreOrderEnumerator(ref PreOrderData data)
@@ -313,14 +304,15 @@ namespace DataStructures.Trees.BinaryTrees
                 TreeElement treeElement = data.stack.Pop();
                 data.processed.Add(treeElement.TreeContent.Content);
 
-                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    data.stack.Push(treeElement.Left);
-                }
                 if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
                 {
                     data.stack.Push(treeElement.Right);
                 }
+                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
+                {
+                    data.stack.Push(treeElement.Left);
+                }
+
                 return treeElement;
             }
 
@@ -336,21 +328,27 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected override TreeElement MovePostOrderEnumerator(ref PostOrderData data)
         {
-            if (data.stack.Count != 0)
+            while (data.current is not null || !data.stack.IsEmpty)
             {
-                TreeElement treeElement = data.stack.Pop();
-                data.processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !data.processed.Contains(treeElement.Left.TreeContent.Content))
+                if (data.current is not null)
                 {
-                    data.stack.Push(treeElement.Left);
+                    data.stack.Push(data.current);
+                    data.current = data.current.Left;
                 }
-                if (treeElement.Right != null && !data.processed.Contains(treeElement.Right.TreeContent.Content))
+                else
                 {
-                    data.stack.Push(treeElement.Right);
-                }
+                    TreeElement peek = data.stack.Peek();
 
-                return treeElement;
+                    if (peek.Right is not null && data.previous != peek.Right)
+                    {
+                        data.current = peek.Right;
+                    }
+                    else
+                    {
+                        data.previous = data.stack.Pop();
+                        return peek;
+                    }
+                }
             }
 
             data.processed.Dispose();
@@ -360,16 +358,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected override void InitializePostOrderEnumerator(ref PostOrderData data)
         {
-            data.stack.Push(root);
-
-            if (root.Left != null)
-            {
-                data.stack.Push(root.Left);
-            }
-            if (root.Right != null)
-            {
-                data.stack.Push(root.Right);
-            }
+            data.current = root;
         }
 
         protected override TreeElement MoveBreadthFirstEnumerator(ref BreadthFirstData data)
@@ -397,32 +386,6 @@ namespace DataStructures.Trees.BinaryTrees
         protected override void InitializeBreadthFirstEnumerator(ref BreadthFirstData data)
         {
             data.queue.Enqueue(root);
-        }
-
-        protected override TreeElement MoveDepthFirstEnumerator(ref DepthFirstData data)
-        {
-            if (data.stack.Count != 0)
-            {
-                TreeElement actualTreeElement = data.stack.Pop();
-
-                if (actualTreeElement.Right != null)
-                {
-                    data.stack.Push(actualTreeElement.Right);
-                }
-                if (actualTreeElement.Left != null)
-                {
-                    data.stack.Push(actualTreeElement.Left);
-                }
-
-                return actualTreeElement;
-            }
-
-            return null;
-        }
-
-        protected override void InitializeDepthFirstEnumerator(ref DepthFirstData data)
-        {
-            data.stack.Push(root);
         }
     }
 }

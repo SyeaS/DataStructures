@@ -58,7 +58,8 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected TComparableWrapper GetPriority(ref TreeElement treeElement)
         {
-            return treeElement.TreeContent.Priority ?? Value;
+            return treeElement is not null ?
+                treeElement.TreeContent.Priority : Value;
         }
     }
 }

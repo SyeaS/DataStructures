@@ -14,6 +14,11 @@ namespace DataStructures.LinkedList
             public T Content { get; set; }
             public IListElement Next { get; set; }
 
+            public ListElement()
+            {
+
+            }
+
             public ListElement(ref T content)
             {
                 Content = content;
@@ -24,6 +29,16 @@ namespace DataStructures.LinkedList
         {
             public T Content { get; set; }
             public IListElement Next { get; set; }
+        }
+
+        protected class InternalListElementNotFoundException : ListElementNotFoundException
+        {
+            public IListElement ListElement { get; }
+
+            public InternalListElementNotFoundException(IListElement listElement) : base()
+            {
+                ListElement = listElement;
+            }
         }
 
         protected abstract IListElement Head { get; }
@@ -188,7 +203,7 @@ namespace DataStructures.LinkedList
                 }
             }
 
-            return default(T);
+            throw new ListElementNotFoundException();
         }
 
         /// <summary>

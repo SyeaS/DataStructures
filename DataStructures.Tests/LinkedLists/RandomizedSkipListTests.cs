@@ -1,4 +1,4 @@
-﻿using DataStructures.Heaps;
+﻿using DataStructures.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,45 +8,68 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests.Trees.Heaps
+namespace DataStructures.Tests.LinkedLists
 {
-    public class MaxHeapTests
+    public class RandomizedSkipListTests
     {
         [Theory]
-        [InlineData(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
-        [InlineData(5, 2, 7, 1, 9, 8, 3)]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void AddTest(params int[] values)
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>(HeapData.CreateFromValues(values));
-            Assert.True(maxHeap.Count == values.Length);
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+
+            foreach (int item in randomizedSkipList)
+            {
+                Assert.True(randomizedSkipList.Contains(item), $"Item: { item } wasn't added!");
+            }
+
+            foreach (int item in randomizedSkipList.GetLevels())
+            {
+
+            }
         }
 
         [Theory]
-        [InlineData(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
-        [InlineData(5, 2, 7, 1, 9, 8, 3)]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void RemoveTest(params int[] values)
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>(HeapData.CreateFromValues(values));
-            int[] sortedArray = new int[values.Length];
-            values.CopyTo(sortedArray, 0);
-            Array.Sort(sortedArray);
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+            Random random = new Random();
+            List<int> valuesList = new List<int>(values);
 
-            for (int i = values.Length - 1; i >= 0; i--)
+            for (int i = randomizedSkipList.Count - 1; i >= 0; i--)
             {
-                if (sortedArray[i] != maxHeap.Extract().Number)
-                {
-                    Assert.True(false, "Extraction didn't work!");
-                }
-            }
+                int number = random.Next(i);
 
-            Assert.True(maxHeap.Count == 0);
+                randomizedSkipList.Remove(valuesList[number]);
+
+                Assert.False(randomizedSkipList.Contains(valuesList[number]), $"Item { valuesList[number] } wasn't deleted!");
+                valuesList.Remove(valuesList[number]);
+            }
+        }
+
+        [Theory]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
+        public void SearchTest(params int[] values)
+        {
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+            int index = 0;
+            Array.Sort(values);
+
+            foreach (int item in randomizedSkipList)
+            {
+                Assert.True(item == values[index++], $"{ item }");
+            }
         }
 
         [Fact]
         public void Add_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapAddTest.txt";
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -55,7 +78,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                randomizedSkipList.Add(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     if (x == 10)
@@ -71,6 +94,33 @@ namespace DataStructures.Tests.Trees.Heaps
                 }
             }
 
+            try
+            {
+                StringBuilder builder = new StringBuilder();
+                IEnumerable<int> lvls = randomizedSkipList.GetLevels();
+                int[] levels = new int[lvls.Count()];
+                string levelpath = @"D:\DefaultPrograms\Programs\C#\skiplistlevel.txt";
+
+                if (File.Exists(levelpath))
+                {
+                    builder.AppendLine();
+                    builder.AppendLine();
+                }
+                builder.Append($"Total levels: { levels.Length }\tTotal elements: { randomizedSkipList.Count }");
+
+                int i = 0;
+                foreach (int count in lvls)
+                {
+                    builder.Append($"\nLevel: { ++i }\t{ count }\t{ Math.Round(((double)count / randomizedSkipList.Count) * 100, 3) }%");
+                }
+
+                File.AppendAllText(levelpath, builder.ToString());
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
+            }
 
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
@@ -109,13 +159,13 @@ namespace DataStructures.Tests.Trees.Heaps
         [Fact]
         public void Search_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapSearchTest.txt";
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                randomizedSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -124,7 +174,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Contains(new HeapData(i));
+                randomizedSkipList.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
@@ -147,13 +197,13 @@ namespace DataStructures.Tests.Trees.Heaps
         [Fact]
         public void Remove_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapRemoveTest.txt";
+            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                randomizedSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -162,7 +212,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Extract();
+                randomizedSkipList.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");

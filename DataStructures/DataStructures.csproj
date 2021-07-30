@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <Folder Include="Heaps\Extensions\" />
+    <Folder Include="LinkedList\Probalistic LinkedLists\SkipList\Exceptions\" />
+    <Folder Include="LinkedList\Probalistic LinkedLists\SkipList\Extensions\" />
+    <Folder Include="LinkedList\Probalistic LinkedLists\SkipList\Interfaces\" />
     <Folder Include="PriorityQueue\Abstract classes\" />
     <Folder Include="PriorityQueue\Exceptions\" />
     <Folder Include="PriorityQueue\Extensions\" />

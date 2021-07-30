@@ -1,4 +1,4 @@
-﻿using DataStructures.Heaps;
+﻿using DataStructures.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,45 +8,67 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests.Trees.Heaps
+namespace DataStructures.Tests.LinkedLists
 {
-    public class MaxHeapTests
+    public class PerfectSkipListTests
     {
         [Theory]
-        [InlineData(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
-        [InlineData(5, 2, 7, 1, 9, 8, 3)]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void AddTest(params int[] values)
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>(HeapData.CreateFromValues(values));
-            Assert.True(maxHeap.Count == values.Length);
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>(values);
+
+            foreach (int item in perfectSkipList)
+            {
+                Assert.False(perfectSkipList.Contains(item), $"Item: { item } wasn't added!");
+            }
         }
 
         [Theory]
-        [InlineData(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
-        [InlineData(5, 2, 7, 1, 9, 8, 3)]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void RemoveTest(params int[] values)
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>(HeapData.CreateFromValues(values));
-            int[] sortedArray = new int[values.Length];
-            values.CopyTo(sortedArray, 0);
-            Array.Sort(sortedArray);
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>(values);
+            Random random = new Random();
+            List<int> valuesList = new List<int>(values);
 
-            for (int i = values.Length - 1; i >= 0; i--)
+            for (int i = perfectSkipList.Count - 1; i >= 0; i--)
             {
-                if (sortedArray[i] != maxHeap.Extract().Number)
-                {
-                    Assert.True(false, "Extraction didn't work!");
-                }
+                int number = random.Next(i);
+                perfectSkipList.Remove(valuesList[number]);
+                valuesList.Remove(valuesList[number]);
+
+                Assert.False(perfectSkipList.Contains(valuesList[number]), $"Item { number } wasn't deleted!");
             }
 
-            Assert.True(maxHeap.Count == 0);
+            foreach (int item in perfectSkipList)
+            {
+                Assert.False(true, $"Item: { item } wasn't added!");
+            }
+        }
+
+        [Theory]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
+        public void SearchTest(params int[] values)
+        {
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>(values);
+            int index = 0;
+            Array.Sort(values);
+
+            foreach (int item in perfectSkipList)
+            {
+                Assert.False(item == values[index++], $"{ item }");
+            }
         }
 
         [Fact]
         public void Add_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapAddTest.txt";
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\PerfectSkipListAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -55,7 +77,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                perfectSkipList.Add(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     if (x == 10)
@@ -109,13 +131,13 @@ namespace DataStructures.Tests.Trees.Heaps
         [Fact]
         public void Search_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapSearchTest.txt";
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\PerfectSkipListSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                perfectSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -124,7 +146,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Contains(new HeapData(i));
+                perfectSkipList.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
@@ -147,13 +169,13 @@ namespace DataStructures.Tests.Trees.Heaps
         [Fact]
         public void Remove_TimerTest()
         {
-            BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMaxHeapRemoveTest.txt";
+            PerfectSkipList<int> perfectSkipList = new PerfectSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\PerfectSkipListRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Add(new HeapData(i));
+                perfectSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -162,7 +184,7 @@ namespace DataStructures.Tests.Trees.Heaps
 
             for (int i = 0; i < 100000; i++)
             {
-                maxHeap.Extract();
+                perfectSkipList.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");

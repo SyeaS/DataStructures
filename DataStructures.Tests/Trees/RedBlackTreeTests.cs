@@ -35,8 +35,8 @@ namespace DataStructures.Tests
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RedBlackTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            DateTime startTime = DateTime.Now;
+            
             int x = 10;
 
             for (int i = 0; i < 100000; i++)
@@ -46,24 +46,18 @@ namespace DataStructures.Tests
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    else
-                    {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    if (x == 10)
-                    {
+                        fileBuilder.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                         x += 90;
                     }
                     else
                     {
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                         x += 100;
                     }
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
             List<string> newFile = new List<string>();
@@ -109,17 +103,17 @@ namespace DataStructures.Tests
             {
                 RBTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 RBTree.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -131,7 +125,7 @@ namespace DataStructures.Tests
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
 
@@ -146,17 +140,17 @@ namespace DataStructures.Tests
             {
                 RBTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 RBTree.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -168,7 +162,7 @@ namespace DataStructures.Tests
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
 

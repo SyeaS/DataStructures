@@ -139,8 +139,8 @@ namespace SortedPlayerQueue.Tests
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinarySearchTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            DateTime startTime = DateTime.Now;
+
             int x = 10;
 
             for (int i = 0; i < 100000; i++)
@@ -150,24 +150,18 @@ namespace SortedPlayerQueue.Tests
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    else
-                    {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    if (x == 10)
-                    {
+                        fileBuilder.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                         x += 90;
                     }
                     else
                     {
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                         x += 100;
                     }
                 }
             }
 
-            stopWatch.Stop();
+
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
             List<string> newFile = new List<string>();
@@ -213,17 +207,17 @@ namespace SortedPlayerQueue.Tests
             {
                 AVLTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+
 
             for (int i = 0; i < 100000; i++)
             {
                 AVLTree.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
 
                     if (x == 10)
                     {
@@ -236,7 +230,7 @@ namespace SortedPlayerQueue.Tests
                 }
             }
 
-            stopWatch.Stop();
+
             File.WriteAllText(path, file.ToString());
         }
 
@@ -251,17 +245,17 @@ namespace SortedPlayerQueue.Tests
             {
                 AVLTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+
 
             for (int i = 0; i < 100000; i++)
             {
                 AVLTree.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -273,7 +267,7 @@ namespace SortedPlayerQueue.Tests
                 }
             }
 
-            stopWatch.Stop();
+
             File.WriteAllText(path, file.ToString());
         }
     }

@@ -19,6 +19,11 @@ namespace DataStructures.LinkedList
 
             }
 
+            public ListElement(T content)
+            {
+                Content = content;
+            }
+
             public ListElement(ref T content)
             {
                 Content = content;
@@ -41,7 +46,7 @@ namespace DataStructures.LinkedList
             }
         }
 
-        protected abstract IListElement Head { get; }
+        protected virtual IListElement Head { get; }
 
         public int Count { get; protected set; }
         public bool IsReadOnly => false;
@@ -193,7 +198,7 @@ namespace DataStructures.LinkedList
         /// <exception cref="NotSupportedException"></exception>
         public abstract int IndexOf(T content);
 
-        protected virtual T Search(T content)
+        public virtual T Search(T content)
         {
             foreach (T item in this)
             {
@@ -217,11 +222,11 @@ namespace DataStructures.LinkedList
             return SearchListElement(index).Content;
         }
 
-        protected IListElement SearchListElement(int index)
+        protected virtual IListElement SearchListElement(int index)
         {
             IListElement m = Head;
 
-            if (index >= Count)
+            if (index >= Count || index < 0)
             {
                 throw new IndexOutOfRangeException("Index is out of bounds of the linked list.");
             }
@@ -234,14 +239,14 @@ namespace DataStructures.LinkedList
             return m;
         }
 
-        public bool this[T content]
+        public int this[T content]
         {
-            get => Contains(content);
+            get => IndexOf(content);
         }
 
         public T this[int index]
         {
-            get { return Search(index); }
+            get => Search(index);
         }
 
         public virtual void Clear()
@@ -254,7 +259,7 @@ namespace DataStructures.LinkedList
             Count = 0;
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
             return new Enumerator(this);
         }

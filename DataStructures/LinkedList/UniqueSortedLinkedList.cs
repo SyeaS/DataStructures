@@ -186,7 +186,7 @@ namespace DataStructures.LinkedList
             }
         }
 
-        protected override T Search(T content)
+        public override T Search(T content)
         {
             IDoublyLinkedListElement m = head;
 

@@ -60,12 +60,12 @@ namespace DataStructures.Tests.Trees.Heaps
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 90;
                     }
                     else
                     {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 100;
                     }
                 }
@@ -127,7 +127,7 @@ namespace DataStructures.Tests.Trees.Heaps
                 maxHeap.Contains(new HeapData(i));
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
 
                     if (x == 10)
                     {
@@ -165,7 +165,7 @@ namespace DataStructures.Tests.Trees.Heaps
                 maxHeap.Extract();
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;

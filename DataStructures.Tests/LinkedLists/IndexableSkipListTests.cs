@@ -10,24 +10,63 @@ using Xunit;
 
 namespace DataStructures.Tests.LinkedLists
 {
-    public class RandomizedSkipListTests
+    public class IndexableSkipListTests
     {
         [Theory]
         [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
         [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
+        [InlineData(5, 10, 7, 8, 20)]
         public void AddTest(params int[] values)
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
+            StringBuilder firstLine = new StringBuilder();
+            Random random = new Random();
 
-            foreach (int item in randomizedSkipList)
+            for (int i = 0; i < values.Length; i++)
             {
-                Assert.True(randomizedSkipList.Contains(item), $"Item: { item } wasn't added!");
+                // Swap
+                int rand = random.Next(0, values.Length);
+
+                int temp = values[i];
+                values[i] = values[rand];
+                values[rand] = temp;
             }
 
-            foreach (int item in randomizedSkipList.GetLevels())
-            {
+            int length = values.Length - 1;
 
+            for (int i = 0; i < length; i++)
+            {
+                firstLine.Append($"{ values[i] }, ");
             }
+
+            firstLine.Append($"{ values[length] }\n");
+
+            File.WriteAllText("indexableSkipListAddTest.txt", firstLine.ToString());
+
+            foreach (int value in values)
+            {
+                indexableSkipList.Add(value);
+
+                File.AppendAllText("indexableSkipListAddTest.txt", $"Adding element { value } to the Indexable Skip List:");
+
+                Debug.WriteLine(@$"Writing path: { Directory.GetCurrentDirectory() }\indexableSkipListAddTest.txt");
+                Trace.WriteLine(@$"Writing path: { Directory.GetCurrentDirectory() }\indexableSkipListAddTest.txt");
+
+                StringBuilder builder = new StringBuilder();
+
+                foreach (string line in indexableSkipList.Print())
+                {
+                    builder.Append($"\n{ line }");
+                }
+
+                File.AppendAllText("indexableSkipListAddTest.txt", builder.ToString());
+                File.AppendAllLines("indexableSkipListAddTest.txt", new string[1] { "\n" });
+            }
+
+            /*foreach (int item in indexableSkipList)
+            {
+                Assert.False(indexableSkipList.Contains(item), $"Item: { item } wasn't added!");
+            }*/
         }
 
         [Theory]
@@ -35,18 +74,38 @@ namespace DataStructures.Tests.LinkedLists
         [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void RemoveTest(params int[] values)
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>(values);
             Random random = new Random();
             List<int> valuesList = new List<int>(values);
 
-            for (int i = randomizedSkipList.Count - 1; i >= 0; i--)
+            for (int i = indexableSkipList.Count - 1; i >= 0; i--)
             {
                 int number = random.Next(i);
-
-                randomizedSkipList.Remove(valuesList[number]);
-
-                Assert.False(randomizedSkipList.Contains(valuesList[number]), $"Item { valuesList[number] } wasn't deleted!");
+                indexableSkipList.Remove(valuesList[number]);
                 valuesList.Remove(valuesList[number]);
+
+                Assert.False(indexableSkipList.Contains(valuesList[number]), $"Item { number } wasn't deleted!");
+            }
+
+            foreach (int item in indexableSkipList)
+            {
+                Assert.False(true, $"Item: { item } wasn't added!");
+            }
+        }
+
+        [Theory]
+        [InlineData(5, 20, 10, 70, 40, 90, 100, 25, 64, 95)]
+        [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
+        public void IndexTest(params int[] values)
+        {
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>(values);
+            int[] vals = new int[values.Length];
+            values.CopyTo(vals, 0);
+            Array.Sort(vals);
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Assert.False(indexableSkipList[i] == vals[i], $"Element { vals[i] } at index { i } cannot be found in the Indexable Skip List.");
             }
         }
 
@@ -55,21 +114,21 @@ namespace DataStructures.Tests.LinkedLists
         [InlineData(-100, -20, -50, 20, 30, 10, 40, 2, 8, 15, 60)]
         public void SearchTest(params int[] values)
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>(values);
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>(values);
             int index = 0;
             Array.Sort(values);
 
-            foreach (int item in randomizedSkipList)
+            foreach (int item in indexableSkipList)
             {
-                Assert.True(item == values[index++], $"{ item }");
+                Assert.False(item == values[index++], $"{ item }");
             }
         }
 
         [Fact]
         public void Add_TimerTest()
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListAddTest.txt";
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\IndexableSkipListAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -78,49 +137,22 @@ namespace DataStructures.Tests.LinkedLists
 
             for (int i = 0; i < 100000; i++)
             {
-                randomizedSkipList.Add(i);
+                indexableSkipList.Add(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 90;
                     }
                     else
                     {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 100;
                     }
                 }
             }
 
-            try
-            {
-                StringBuilder builder = new StringBuilder();
-                IEnumerable<int> lvls = randomizedSkipList.GetLevels();
-                int[] levels = new int[lvls.Count()];
-                string levelpath = @"D:\DefaultPrograms\Programs\C#\skiplistlevel.txt";
-
-                if (File.Exists(levelpath))
-                {
-                    builder.AppendLine();
-                    builder.AppendLine();
-                }
-                builder.Append($"Total levels: { levels.Length }\tTotal elements: { randomizedSkipList.Count }");
-
-                int i = 0;
-                foreach (int count in lvls)
-                {
-                    builder.Append($"\nLevel: { ++i }\t{ count }\t{ Math.Round(((double)count / randomizedSkipList.Count) * 100, 3) }%");
-                }
-
-                File.AppendAllText(levelpath, builder.ToString());
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e.Message);
-                Debug.WriteLine(e.Message);
-            }
 
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
@@ -159,13 +191,13 @@ namespace DataStructures.Tests.LinkedLists
         [Fact]
         public void Search_TimerTest()
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListSearchTest.txt";
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\IndexableSkipListSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                randomizedSkipList.Add(i);
+                indexableSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -174,10 +206,10 @@ namespace DataStructures.Tests.LinkedLists
 
             for (int i = 0; i < 100000; i++)
             {
-                randomizedSkipList.Contains(i);
+                indexableSkipList.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
 
                     if (x == 10)
                     {
@@ -197,13 +229,13 @@ namespace DataStructures.Tests.LinkedLists
         [Fact]
         public void Remove_TimerTest()
         {
-            RandomizedSkipList<int> randomizedSkipList = new RandomizedSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RandomizedSkipListRemoveTest.txt";
+            IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\IndexableSkipListRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {
-                randomizedSkipList.Add(i);
+                indexableSkipList.Add(i);
             }
             DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
@@ -212,10 +244,10 @@ namespace DataStructures.Tests.LinkedLists
 
             for (int i = 0; i < 100000; i++)
             {
-                randomizedSkipList.Remove(i);
+                indexableSkipList.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { (startTime - DateTime.Now).TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;

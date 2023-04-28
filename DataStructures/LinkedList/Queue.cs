@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public sealed class Queue<T> : SinglyLinkedList<T>, ILinear<T>
+    public sealed class Queue<T> : SinglyLinkedList<T>, IQueue<T>, ILinear<T>
     {
         private IListElement tail;
 
@@ -89,7 +89,7 @@ namespace DataStructures.LinkedList
             return Dequeue();
         }
 
-        public T Peek()
+        public T PeekFirst()
         {
             if (Head == null)
             {

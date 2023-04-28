@@ -11,17 +11,11 @@ namespace DataStructures.LinkedList
     {
         private static OrderingMode orderingMode;
         public OrderingMode OrderingMode => orderingMode;
-        private Comparison<T> Comparator { get; }
 
-        private SortedLinkedList(OrderingMode ordering) : base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
+        public SortedLinkedList(OrderingMode ordering) :
+            base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
         {
             orderingMode = ordering;
-        }
-
-        public SortedLinkedList(OrderingMode ordering, Comparison<T> comparator) : base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
-        {
-            orderingMode = ordering;
-            this.Comparator = comparator;
         }
 
         /// <summary>
@@ -29,7 +23,8 @@ namespace DataStructures.LinkedList
         /// </summary>
         /// <param name="content"></param>
         /// <param name="ordering"></param>
-        public SortedLinkedList(IEnumerable<T> content, Comparison<T> comparator, OrderingMode ordering = OrderingMode.Descending) : this(ordering, comparator)
+        public SortedLinkedList(IEnumerable<T> content, OrderingMode ordering = OrderingMode.Descending) :
+            this(ordering)
         {
             base.CreateFromIEnumerable(ref content);
         }
@@ -174,12 +169,12 @@ namespace DataStructures.LinkedList
         {
             IDoublyLinkedListElement m = head;
 
-            while (!(m == Tail || Comparator(m.Content, content) == 0))
+            while (!(m == Tail || m.Content.CompareTo(content) == 0))
             {
                 m = m.Next;
             }
 
-            if (m == Tail && Comparator(m.Content, content) != 0)
+            if (m == Tail && m.Content.CompareTo(content) != 0)
             {
                 throw new ListElementNotFoundException();
             }
@@ -199,7 +194,7 @@ namespace DataStructures.LinkedList
                 throw new ListElementNotFoundException();
             }
 
-            if (Comparator(head.Content, content) == 0)
+            if (head.Content.CompareTo(content) == 0)
             {
                 if (Count > 2)
                 {
@@ -217,7 +212,7 @@ namespace DataStructures.LinkedList
                     }
                 }
             }
-            else if (Tail != null && Comparator(Tail.Content, content) == 0)
+            else if (Tail != null && Tail.Content.CompareTo(content) == 0)
             {
                 if (Count > 2)
                 {
@@ -234,7 +229,7 @@ namespace DataStructures.LinkedList
             {
                 IDoublyLinkedListElement m = head;
 
-                while (!(m == Tail || Comparator(m.Content, content) == 0))
+                while (!(m == Tail || m.Content.CompareTo(content) == 0))
                 {
                     m = m.Next;
                 }
@@ -309,7 +304,7 @@ namespace DataStructures.LinkedList
         {
             foreach (T content in this)
             {
-                if (Comparator(content, item) == 0)
+                if (content.CompareTo(item) == 0)
                 {
                     return true;
                 }

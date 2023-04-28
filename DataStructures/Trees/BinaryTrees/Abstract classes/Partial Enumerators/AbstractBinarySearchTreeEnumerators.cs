@@ -74,7 +74,7 @@ namespace DataStructures.Trees.BinaryTrees
                 }
                 else
                 {
-                    TreeElement peek = data.stack.Peek();
+                    TreeElement peek = data.stack.PeekLast();
 
                     if (peek.Right is not null && data.previous != peek.Right)
                     {

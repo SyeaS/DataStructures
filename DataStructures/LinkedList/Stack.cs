@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class Stack<T> : SinglyLinkedList<T>, ILinear<T>
+    public class Stack<T> : SinglyLinkedList<T>, IStack<T>, ILinear<T>
     {
         public Stack()
         {
@@ -82,7 +82,7 @@ namespace DataStructures.LinkedList
             return content;
         }
 
-        public T Peek()
+        public T PeekLast()
         {
             if (Head == null)
             {

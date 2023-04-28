@@ -120,13 +120,14 @@ namespace DataStructures.LinkedList
 
             IIndexedSkipListElement m = head;
             IIndexedSkipListElement prev = null;
-            int width = 1;
+
+            int skipped = 1;
 
             for (int i = Level - 1; i >= 0; i--)
             {
-                for (; m.Next[i] is not null; m = m.Next[i])
+                while (m.Next[i] is not null)
                 {
-                    if (element.CompareTo(m.Next[i].Content) < 0)
+                    /*if (element.CompareTo(m.Next[i].Content) < 0)
                     {
                         if (i > 0 && m.Next[i] != prev)
                         {
@@ -134,30 +135,27 @@ namespace DataStructures.LinkedList
                             prev = m.Next[i];
                         }
                         break;
-                    }
+                    }*/
 
-                    width += m.Next[i][i];
+                    skipped += m.Next[i][i];
+                    m = m.Next[i];
                 }
+
+                // 
+                // 
+                // 
+                // 
+                // 
 
                 if (level >= i)
                 {
-                    if (m.Next[i] is not null) // between two elements
-                    {
-                        newElement[i] = m.Next[i][i] - 1;
-                        m.Next[i][i] = 1;
-                    }
-                    else
-                    {
-                        if (level < m.Next.Length - 1)
-                        {
-                            newElement[i] = width;
-                        }
-                    }
+                    newElement[i] = 1;
+
+                    System.Diagnostics.Debug.WriteLine($"{ newElement.Content }: { m.Content }");
+
                     newElement.Next[i] = m.Next[i];
                     m.Next[i] = newElement;
                 }
-
-                width = 1;
             }
         }
 

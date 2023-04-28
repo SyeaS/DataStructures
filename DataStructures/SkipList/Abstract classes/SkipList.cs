@@ -120,6 +120,7 @@ namespace DataStructures.LinkedList
         {
             int level = RandomLevel();
             SkipListElement newElement = new SkipListElement(ref element, level + 1);
+            Stack<ISkipListElement> chain = new Stack<ISkipListElement>();
 
             if (head is null)
             {
@@ -127,8 +128,30 @@ namespace DataStructures.LinkedList
             }
 
             ISkipListElement m = head;
-
+            
+            
             for (int i = Level - 1; i >= 0; i--)
+            {
+                while (!(m.Next[i] == null || element.CompareTo(m.Next[i].Content) < 0))
+                {
+                    m = m.Next[i];
+                }
+
+                if (level >= i && chain != null)
+                {
+                    //chain[i] = m.Next[i];
+                    chain.Push(m.Next[i]);
+                }
+            }
+
+            for (int i = level - 1; i >= 0; i--)
+            {
+                ISkipListElement elem = chain.Pop();
+                newElement.Next[i] = elem;
+                elem.Next[i] = newElement;
+            }
+
+            /*for (int i = Level - 1; i >= 0; i--)
             {
                 for (; m.Next[i] is not null; m = m.Next[i])
                 {
@@ -143,7 +166,7 @@ namespace DataStructures.LinkedList
                     newElement.Next[i] = m.Next[i];
                     m.Next[i] = newElement;
                 }
-            }
+            }*/
         }
 
         protected override void InternalRemove(ref T element)

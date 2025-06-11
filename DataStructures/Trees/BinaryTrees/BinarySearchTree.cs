@@ -21,12 +21,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         }
 
-        public override T Pop(T content)
-        {
-            return InternalRemove(ref content).TreeContent.Content;
-        }
-
-        public override T PopMin()
+        protected override T InternalPopMin()
         {
             TreeElement minimum = Minimum(root);
 
@@ -35,7 +30,7 @@ namespace DataStructures.Trees.BinaryTrees
             return minimum.TreeContent.Content;
         }
 
-        public override T PopMax()
+        protected override T InternalPopMax()
         {
             TreeElement maximum = Maximum(root);
 

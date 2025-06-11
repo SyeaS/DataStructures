@@ -7,30 +7,23 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public class Stack<TContent> : DoublyLinkedList<TContent>, ILinear<TContent>
+    public class Stack<T> : SinglyLinkedList<T>, IStack<T>, ILinear<T>
     {
-        protected override ListElement Tail => head?.Previous;
-
-        public Stack() : base(new EmptyLinkedListInitializer(CreateEmptyStack))
+        public Stack()
         {
 
         }
 
-        public Stack(IEnumerable<TContent> content) : this()
+        public Stack(IEnumerable<T> content)
         {
-            base.CreateLinkedList(content);
-        }
-
-        private static Stack<TContent> CreateEmptyStack()
-        {
-            return new Stack<TContent>();
+            base.CreateFromIEnumerable(ref content);
         }
 
         /// <summary>
         /// Adds an element to the top of the linked list.
         /// </summary>
         /// <param name="content"></param>
-        protected override void InternalAdd(ref TContent content)
+        protected override void InternalAdd(ref T content)
         {
             AddToStack(ref content);
         }
@@ -39,26 +32,16 @@ namespace DataStructures.LinkedList
         /// Adds an element to the top of the linked list.
         /// </summary>
         /// <param name="content"></param>
-        public void Push(TContent content)
+        public void Push(T content)
         {
             base.Add(content);
         }
 
-        private void AddToStack(ref TContent content)
+        private void AddToStack(ref T content)
         {
-            ListElement listElement = new ListElement(content);
-
-            if (head == null)
-            {
-                head = listElement;
-                tail = head;
-            }
-            else
-            {
-                tail.Next = listElement;
-                listElement.Previous = tail;
-                tail = tail.Next;
-            }
+            ListElement listElement = new ListElement(ref content);
+            listElement.Next = Head;
+            head = listElement;
         }
 
         /// <summary>
@@ -66,7 +49,7 @@ namespace DataStructures.LinkedList
         /// </summary>
         /// <param name="content"></param>
         /// <exception cref="NotSupportedException"></exception>
-        protected override void InternalRemove(ref TContent content)
+        protected override void InternalRemove(ref T content)
         {
             throw new NotSupportedException("The remove operation for Stack is not supported.");
         }
@@ -85,50 +68,33 @@ namespace DataStructures.LinkedList
         /// Removes an element from the top of the linked list.
         /// </summary>
         /// <returns></returns>
-        public TContent Pop()
+        public T Pop()
         {
-            if (_count == 0)
+            if (Count == 0)
             {
                 throw new EmptyLinkedListException();
             }
 
-            TContent content;
+            T content = Head.Content;
+            head = Head.Next;
 
-            if (_count == 1)
-            {
-                content = head.Content;
-                head = null;
-                tail = null;
-            }
-            else
-            {
-                content = tail.Content;
-                tail.Previous.Next = null;
-                tail = tail.Previous;
-            }
-
-            _count--;
+            Count--;
             return content;
         }
 
-        public TContent Peek()
+        public T PeekLast()
         {
-            if (tail == null)
+            if (Head == null)
             {
                 throw new EmptyLinkedListException();
             }
 
-            return tail.Content;
+            return Head.Content;
         }
 
-        public TContent Remove()
+        public T Remove()
         {
             return Pop();
-        }
-
-        public override bool Equals(DoublyLinkedList<TContent> other)
-        {
-            return other == this;
         }
     }
 }

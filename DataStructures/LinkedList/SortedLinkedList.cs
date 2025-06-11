@@ -11,18 +11,11 @@ namespace DataStructures.LinkedList
     {
         private static OrderingMode orderingMode;
         public OrderingMode OrderingMode => orderingMode;
-        private Comparison<T> Comparator { get; }
-        protected override ListElement Tail => head?.Previous;
 
-        private SortedLinkedList(OrderingMode ordering) : base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
+        public SortedLinkedList(OrderingMode ordering) :
+            base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
         {
             orderingMode = ordering;
-        }
-
-        public SortedLinkedList(OrderingMode ordering, Comparison<T> comparator) : base(new EmptyLinkedListInitializer(CreateEmptySortedLinkedList))
-        {
-            orderingMode = ordering;
-            this.Comparator = comparator;
         }
 
         /// <summary>
@@ -30,9 +23,10 @@ namespace DataStructures.LinkedList
         /// </summary>
         /// <param name="content"></param>
         /// <param name="ordering"></param>
-        public SortedLinkedList(IEnumerable<T> content, Comparison<T> comparator, OrderingMode ordering = OrderingMode.Descending) : this(ordering, comparator)
+        public SortedLinkedList(IEnumerable<T> content, OrderingMode ordering = OrderingMode.Descending) :
+            this(ordering)
         {
-            base.CreateLinkedList(content);
+            base.CreateFromIEnumerable(ref content);
         }
 
         private static DoublyLinkedList<T> CreateEmptySortedLinkedList()
@@ -61,7 +55,7 @@ namespace DataStructures.LinkedList
 
         private void AddElementByDescendingOrder(ref T content)
         {
-            ListElement listElement = new ListElement(content);
+            IDoublyLinkedListElement listElement = new DoublyLinkedListElement(ref content);
 
             if (head == null)
             {
@@ -74,7 +68,7 @@ namespace DataStructures.LinkedList
                 head = listElement;
                 head.Next.Previous = head;
 
-                if (_count == 1)
+                if (Count == 1)
                 {
                     head.Previous = head.Next;
                     head.Next.Next = head;
@@ -100,7 +94,7 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                ListElement m = head;
+                IDoublyLinkedListElement m = head;
 
                 while (!(m == Tail || m.Content.CompareTo(content) < 0))
                 {
@@ -117,7 +111,7 @@ namespace DataStructures.LinkedList
 
         private void AddElementByAscendingOrder(ref T content)
         {
-            ListElement listElement = new ListElement(content);
+            IDoublyLinkedListElement listElement = new DoublyLinkedListElement(ref content);
 
             if (head == null)
             {
@@ -130,7 +124,7 @@ namespace DataStructures.LinkedList
                 head = listElement;
                 head.Next.Previous = head;
 
-                if (_count == 1)
+                if (Count == 1)
                 {
                     head.Previous = head.Next;
                     head.Next.Next = head;
@@ -156,7 +150,7 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                ListElement m = head;
+                IDoublyLinkedListElement m = head;
 
                 while (!(m == Tail || m.Content.CompareTo(content) > 0))
                 {
@@ -171,16 +165,16 @@ namespace DataStructures.LinkedList
             }
         }
 
-        protected override T Search(T content)
+        public override T Search(T content)
         {
-            ListElement m = head;
+            IDoublyLinkedListElement m = head;
 
-            while (!(m == Tail || Comparator(m.Content, content) == 0))
+            while (!(m == Tail || m.Content.CompareTo(content) == 0))
             {
                 m = m.Next;
             }
 
-            if (m == Tail && Comparator(m.Content, content) != 0)
+            if (m == Tail && m.Content.CompareTo(content) != 0)
             {
                 throw new ListElementNotFoundException();
             }
@@ -195,14 +189,14 @@ namespace DataStructures.LinkedList
         /// <exception cref="ListElementNotFoundException"></exception>
         protected override void InternalRemove(ref T content)
         {
-            if (_count == 0)
+            if (Count == 0)
             {
                 throw new ListElementNotFoundException();
             }
 
-            if (Comparator(head.Content, content) == 0)
+            if (head.Content.CompareTo(content) == 0)
             {
-                if (_count > 2)
+                if (Count > 2)
                 {
                     head.Next.Previous = Tail;
                     head = head.Next;
@@ -218,9 +212,9 @@ namespace DataStructures.LinkedList
                     }
                 }
             }
-            else if (Tail != null && Comparator(Tail.Content, content) == 0)
+            else if (Tail != null && Tail.Content.CompareTo(content) == 0)
             {
-                if (_count > 2)
+                if (Count > 2)
                 {
                     Tail.Previous.Next = head;
                     head.Previous = Tail.Previous;
@@ -233,9 +227,9 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                ListElement m = head;
+                IDoublyLinkedListElement m = head;
 
-                while (!(m == Tail || Comparator(m.Content, content) == 0))
+                while (!(m == Tail || m.Content.CompareTo(content) == 0))
                 {
                     m = m.Next;
                 }
@@ -252,7 +246,7 @@ namespace DataStructures.LinkedList
 
         public override void RemoveAt(int index)
         {
-            if (index >= _count || index < 0)
+            if (index >= Count || index < 0)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -262,14 +256,14 @@ namespace DataStructures.LinkedList
                 head.Next.Previous = Tail;
                 head = head.Next;
             }
-            else if (index == _count - 1)
+            else if (index == Count - 1)
             {
                 head.Previous.Previous.Next = head;
                 head.Previous = head.Previous.Previous;
             }
             else
             {
-                ListElement m = head.Next;
+                IDoublyLinkedListElement m = head.Next;
 
                 for (int i = 1; i != index; i++)
                 {
@@ -280,7 +274,7 @@ namespace DataStructures.LinkedList
                 m.Next.Previous = m.Previous;
             }
 
-            _count--;
+            Count--;
         }
 
         public override int IndexOf(T item)
@@ -290,7 +284,7 @@ namespace DataStructures.LinkedList
                 return Count - 1;
             }
 
-            ListElement m = head;
+            IDoublyLinkedListElement m = head;
             int index = 0;
 
             for (int i = index; !(i > Count && m.Content.CompareTo(item) == 0); i++)
@@ -306,6 +300,19 @@ namespace DataStructures.LinkedList
             return index;
         }
 
+        public override bool Contains(T item)
+        {
+            foreach (T content in this)
+            {
+                if (content.CompareTo(item) == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Compares the two sorted linked lists by their values.
         /// </summary>
@@ -314,15 +321,15 @@ namespace DataStructures.LinkedList
         /// <returns></returns>
         public static bool operator ==(SortedLinkedList<T> left, SortedLinkedList<T> right)
         {
-            if (left._count != right._count || left.OrderingMode != right.OrderingMode)
+            if (left.Count != right.Count || left.OrderingMode != right.OrderingMode)
             {
                 return false;
             }
 
-            ListElement leftElement = right.head;
-            ListElement rightElement = left.head;
+            IDoublyLinkedListElement leftElement = right.head;
+            IDoublyLinkedListElement rightElement = left.head;
 
-            for (int i = 0; i < left._count; i++)
+            for (int i = 0; i < left.Count; i++)
             {
                 if (leftElement.Content.CompareTo(rightElement.Content) != 0)
                 {
@@ -394,9 +401,9 @@ namespace DataStructures.LinkedList
         {
             SortedLinkedList<T> container = new SortedLinkedList<T>(left.OrderingMode);
 
-            ListElement rightElement = right.head;
+            IDoublyLinkedListElement rightElement = right.head;
 
-            for (int i = 0; i < left._count; i++)
+            for (int i = 0; i < left.Count; i++)
             {
                 try
                 {

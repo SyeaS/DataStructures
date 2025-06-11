@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.Wrappers.Numerics
 {
-    public sealed class DecimalWrapper : AritmethicalWrapper<decimal>
+    public class DecimalWrapper : AritmethicalWrapper<decimal>
     {
         public DecimalWrapper(decimal value) : this(ref value)
         {

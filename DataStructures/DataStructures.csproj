@@ -1,18 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>DataStructures</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Heaps\Extensions\" />
+    <Folder Include="LinkedList\Probalistic LinkedLists\" />
+    <Folder Include="SkipList\Exceptions\" />
+    <Folder Include="SkipList\Extensions\" />
+    <Folder Include="SkipList\Interfaces\" />
     <Folder Include="PriorityQueue\Abstract classes\" />
     <Folder Include="PriorityQueue\Exceptions\" />
     <Folder Include="PriorityQueue\Extensions\" />
     <Folder Include="Trees\BinaryTrees\Extensions\" />
     <Folder Include="HashTable\Extensions\" />
     <Folder Include="Wrappers\Exceptions\" />
-    <Folder Include="Wrappers\Extensions\" />
   </ItemGroup>
 </Project>

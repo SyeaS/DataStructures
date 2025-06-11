@@ -49,8 +49,8 @@ namespace DataStructures.Tests.Trees.Heaps
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMinHeapAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            DateTime startTime = DateTime.Now;
+            
             int x = 10;
 
             for (int i = 0; i < 100000; i++)
@@ -60,11 +60,11 @@ namespace DataStructures.Tests.Trees.Heaps
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     }
                     else
                     {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     }
                     if (x == 10)
                     {
@@ -77,7 +77,7 @@ namespace DataStructures.Tests.Trees.Heaps
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
             List<string> newFile = new List<string>();
@@ -123,17 +123,17 @@ namespace DataStructures.Tests.Trees.Heaps
             {
                 minHeap.Add(new HeapData(i));
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 minHeap.Contains(new HeapData(i));
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
 
                     if (x == 10)
                     {
@@ -146,7 +146,7 @@ namespace DataStructures.Tests.Trees.Heaps
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
 
@@ -161,17 +161,17 @@ namespace DataStructures.Tests.Trees.Heaps
             {
                 minHeap.Add(new HeapData(i));
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 minHeap.Extract();
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -183,7 +183,7 @@ namespace DataStructures.Tests.Trees.Heaps
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
     }

@@ -149,12 +149,7 @@ namespace DataStructures.Trees.BinaryTrees
             InternalRedBlackTreeRemove(ref treeElement, ref newElement);
         }
 
-        public override T Pop(T content)
-        {
-            return InternalRemove(ref content).TreeContent.Content;
-        }
-
-        public override T PopMin()
+        protected override T InternalPopMin()
         {
             TreeElement minimum = Minimum(root);
             base.InternalRemoveWithoutDetaching(ref minimum, out TreeElement newElement);
@@ -162,7 +157,7 @@ namespace DataStructures.Trees.BinaryTrees
             return minimum.TreeContent.Content;
         }
 
-        public override T PopMax()
+        protected override T InternalPopMax()
         {
             TreeElement maximum = Maximum(root);
             base.InternalRemoveWithoutDetaching(ref maximum, out TreeElement newElement);

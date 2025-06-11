@@ -7,20 +7,19 @@ using DataStructures.LinkedList;
 
 namespace DataStructures.Trees.BinaryTrees
 {
-    public abstract class AbstractBinarySearchTree<T, TTreeElement> : BinaryTree<T, TTreeElement>
+    public abstract partial class AbstractBinarySearchTree<T, TTreeElement> : BinaryTree<T, TTreeElement>
         where T : IComparable<T>
         where TTreeElement : ITreeContent<T>, new()
     {
-        protected override IEnumerable<T> DefaultIterator => InOrder();
+        protected override IEnumerable<T> DefaultEnumerator => InternalInOrder() as IEnumerable<T>;
 
         public AbstractBinarySearchTree()
         {
-
         }
 
-        public AbstractBinarySearchTree(IEnumerable<T> content) : base(content)
+        public AbstractBinarySearchTree(IEnumerable<T> content)
         {
-
+            base.CreateFromIEnumerable(ref content);
         }
 
         protected override TreeElement InternalAdd(ref T content)
@@ -270,178 +269,6 @@ namespace DataStructures.Trees.BinaryTrees
             }
 
             return treeElement;
-        }
-
-        public override IEnumerable<T> InOrder()
-        {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
-            TreeElement m = root;
-
-            while (m != null)
-            {
-                stack.Push(m);
-                m = m.Left;
-            }
-
-            while (stack.Count != 0)
-            {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement.TreeContent.Content;
-                processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Left);
-                }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Right);
-                }
-            }
-
-            processed.Dispose();
-        }
-
-        public override IEnumerable<T> PreOrder()
-        {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
-            stack.Push(root);
-
-            while (stack.Count != 0)
-            {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement.TreeContent.Content;
-                processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Left);
-                }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Right);
-                }
-            }
-
-            processed.Dispose();
-        }
-
-        public override IEnumerable<T> PostOrder()
-        {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            RedBlackTree<T> processed = new RedBlackTree<T>();
-            stack.Push(root);
-
-            if (root.Left != null)
-            {
-                stack.Push(root.Left);
-            }
-            if (root.Right != null)
-            {
-                stack.Push(root.Right);
-            }
-
-            while (stack.Count != 0)
-            {
-                TreeElement treeElement = stack.Pop();
-                yield return treeElement.TreeContent.Content;
-                processed.Add(treeElement.TreeContent.Content);
-
-                if (treeElement.Left != null && !processed.Contains(treeElement.Left.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Left);
-                }
-                if (treeElement.Right != null && !processed.Contains(treeElement.Right.TreeContent.Content))
-                {
-                    stack.Push(treeElement.Right);
-                }
-            }
-
-            processed.Dispose();
-        }
-
-        public override IEnumerable<T> BreadthFirst()
-        {
-            LinkedList.Queue<TreeElement> queue = new LinkedList.Queue<TreeElement>();
-            queue.Enqueue(root);
-
-            while (queue.Count != 0)
-            {
-                TreeElement actualTreeElement = queue.Dequeue();
-                yield return actualTreeElement.TreeContent.Content;
-
-                if (actualTreeElement.Left != null)
-                {
-                    queue.Enqueue(actualTreeElement.Left);
-                }
-                if (actualTreeElement.Right != null)
-                {
-                    queue.Enqueue(actualTreeElement.Right);
-                }
-            }
-        }
-
-        public override IEnumerable<T> DepthFirst()
-        {
-            LinkedList.Stack<TreeElement> stack = new LinkedList.Stack<TreeElement>();
-            stack.Push(root);
-
-            while (stack.Count != 0)
-            {
-                TreeElement actualTreeElement = stack.Pop();
-                yield return actualTreeElement.TreeContent.Content;
-
-                if (actualTreeElement.Right != null)
-                {
-                    stack.Push(actualTreeElement.Right);
-                }
-                if (actualTreeElement.Left != null)
-                {
-                    stack.Push(actualTreeElement.Left);
-                }
-            }
-        }
-
-        public override void InOrder(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T content in this.InOrder())
-            {
-                method.Invoke(content);
-            }
-        }
-
-        public override void PreOrder(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T content in this.PreOrder())
-            {
-                method.Invoke(content);
-            }
-        }
-
-        public override void PostOrder(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T content in this.PostOrder())
-            {
-                method.Invoke(content);
-            }
-        }
-
-        public override void BreadthFirst(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T content in this.BreadthFirst())
-            {
-                method.Invoke(content);
-            }
-        }
-
-        public override void DepthFirst(ITraversableTree<T>.TraversaryDelegate method)
-        {
-            foreach (T content in this.DepthFirst())
-            {
-                method.Invoke(content);
-            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DataStructures.PriorityQueue
         where T : class, IComparable<T>
     {
         BinaryMaxHeap<T> maxHeap;
+        public int Count => maxHeap.Count;
 
         public MaxPriorityQueue()
         {

@@ -35,8 +35,8 @@ namespace DataStructures.Tests
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RedBlackTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            DateTime startTime = DateTime.Now;
+            
             int x = 10;
 
             for (int i = 0; i < 100000; i++)
@@ -46,24 +46,18 @@ namespace DataStructures.Tests
                 {
                     if (x == 10)
                     {
-                        fileBuilder.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    else
-                    {
-                        fileBuilder.AppendLine($"\n{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
-                    }
-                    if (x == 10)
-                    {
+                        fileBuilder.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 90;
                     }
                     else
                     {
+                        fileBuilder.AppendLine($"\n{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                         x += 100;
                     }
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, fileBuilder.ToString());
             string[] file = File.ReadAllLines(path);
             List<string> newFile = new List<string>();
@@ -109,17 +103,17 @@ namespace DataStructures.Tests
             {
                 RBTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 RBTree.Contains(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -131,7 +125,7 @@ namespace DataStructures.Tests
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
 
@@ -146,17 +140,17 @@ namespace DataStructures.Tests
             {
                 RBTree.Add(i);
             }
-            Stopwatch stopWatch = new Stopwatch();
+            DateTime startTime = DateTime.Now;
             StringBuilder file = new StringBuilder();
             int x = 10;
-            stopWatch.Start();
+            
 
             for (int i = 0; i < 100000; i++)
             {
                 RBTree.Remove(i);
                 if ((i + 1) % (10 * x) == 0)
                 {
-                    file.AppendLine($"{ i + 1 }: { stopWatch.Elapsed.TotalMilliseconds }ms");
+                    file.AppendLine($"{ i + 1 }: { (DateTime.Now - startTime).TotalMilliseconds }ms");
                     if (x == 10)
                     {
                         x += 90;
@@ -168,7 +162,7 @@ namespace DataStructures.Tests
                 }
             }
 
-            stopWatch.Stop();
+            
             File.WriteAllText(path, file.ToString());
         }
 
@@ -277,22 +271,6 @@ namespace DataStructures.Tests
             foreach (double item in RBTree.BreadthFirst())
             {
                 breadthFirst.Add(item);
-            }
-        }
-
-        [Theory]
-        [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
-        public void DepthFirstTest(params double[] values)
-        {
-            RedBlackTree<double> RBTree = new RedBlackTree<double>(values);
-            List<double> depthFirst = new List<double>();
-            RBTree.DepthFirst((item) => { depthFirst.Add(item); });
-
-            depthFirst = new List<double>();
-
-            foreach (double item in RBTree.DepthFirst())
-            {
-                depthFirst.Add(item);
             }
         }
     }

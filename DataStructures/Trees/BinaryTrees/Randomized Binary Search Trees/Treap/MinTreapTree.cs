@@ -1,4 +1,5 @@
-﻿using DataStructures.Wrappers;
+﻿using DataStructures.Heaps;
+using DataStructures.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DataStructures.Trees.BinaryTrees
 {
     public sealed class MinTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
+        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
         public MinTreapTree(RandomGenerator randomGenerator, TComparableWrapper maxValue) : base(maxValue, randomGenerator)
@@ -57,7 +58,7 @@ namespace DataStructures.Trees.BinaryTrees
                 RemoveTwoChildrenNode(treeElement);
             }
         }
-        // MEGFORDÍTANI AZ ÖSSZESNÉL A FELTÉTELEKET!
+
         private void RemoveTwoChildrenNode(TreeElement treeElement)
         {
             while (!(treeElement.Right == null || treeElement.Left == null))
@@ -75,12 +76,7 @@ namespace DataStructures.Trees.BinaryTrees
             DeleteTreeElement(ref treeElement);
         }
 
-        public override T Pop(T content)
-        {
-            return InternalRemove(ref content).TreeContent.Content;
-        }
-
-        public override T PopMin()
+        protected override T InternalPopMin()
         {
             TreeElement treeElement = Minimum(root);
 
@@ -89,7 +85,7 @@ namespace DataStructures.Trees.BinaryTrees
             return treeElement.TreeContent.Content;
         }
 
-        public override T PopMax()
+        protected override T InternalPopMax()
         {
             TreeElement treeElement = Maximum(root);
 
@@ -101,8 +97,25 @@ namespace DataStructures.Trees.BinaryTrees
         public T PopMinPriority()
         {
             T copy = root.TreeContent.Content;
-            Remove(ref root);
+            Remove(copy);
             return copy;
+        }
+
+        public override IEnumerable<TComparableWrapper> InOrderByPriority()
+        {
+            BinaryMinHeap<TComparableWrapper> minHeap = new BinaryMinHeap<TComparableWrapper>(this.Count);
+
+            foreach (TreeElement treeElement in this.InternalPreOrder())
+            {
+                minHeap.Add(treeElement.TreeContent.Priority);
+            }
+
+            int count = minHeap.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return minHeap.Extract();
+            }
         }
     }
 }

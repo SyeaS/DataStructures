@@ -45,5 +45,10 @@ namespace DataStructures.Wrappers
         {
             return new AritmethicalWrapper<T>(value, Addition, Subtraction);
         }
+
+        public static implicit operator T(AritmethicalWrapper<T> wrapper)
+        {
+            return wrapper.Value;
+        }
     }
 }

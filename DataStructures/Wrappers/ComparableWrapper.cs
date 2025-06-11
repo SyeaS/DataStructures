@@ -23,5 +23,15 @@ namespace DataStructures.Wrappers
         {
             return Value.CompareTo(other.Value);
         }
+
+        public static implicit operator T(ComparableWrapper<T> wrapper)
+        {
+            return wrapper.Value;
+        }
+
+        public static implicit operator ComparableWrapper<T>(T value)
+        {
+            return new ComparableWrapper<T>(ref value);
+        }
     }
 }

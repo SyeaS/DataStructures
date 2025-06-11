@@ -192,17 +192,17 @@ namespace DataStructures.Heaps
             return true;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             foreach (T item in tree)
             {
                 yield return item;
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

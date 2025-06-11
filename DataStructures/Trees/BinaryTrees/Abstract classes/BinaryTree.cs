@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures.Trees.BinaryTrees
 {
-    public abstract class BinaryTree<T, TTreeContent> : IBinaryTree<T>
+    public abstract partial class BinaryTree<T, TTreeContent> : IBinaryTree<T>
         where T : IComparable<T>
         where TTreeContent : ITreeContent<T>, new()
     {
@@ -23,11 +23,6 @@ namespace DataStructures.Trees.BinaryTrees
                 TreeContent = new TTreeContent();
                 TreeContent.Content = content;
             }
-
-            public TreeElement(TTreeContent content)
-            {
-                TreeContent = content;
-            }
         }
 
         protected TreeElement root;
@@ -38,7 +33,7 @@ namespace DataStructures.Trees.BinaryTrees
         public bool IsSynchronized => false;
         public object SyncRoot { get; } = new object();
 
-        protected abstract IEnumerable<T> DefaultIterator { get; }
+        protected abstract IEnumerable<T> DefaultEnumerator { get; }
 
         public BinaryTree()
         {
@@ -119,21 +114,36 @@ namespace DataStructures.Trees.BinaryTrees
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T Pop(T content);
+        public T Pop(T content)
+        {
+            return InternalRemove(ref content).TreeContent.Content;
+        }
 
         /// <summary>
         /// Pops the maximum element from the binary tree.
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T PopMax();
+        public T PopMax()
+        {
+            T max = InternalPopMax();
+            _count--;
+            return max;
+        }
+        protected abstract T InternalPopMax();
 
         /// <summary>
         /// Pops the minimum element from the binary tree.
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public abstract T PopMin();
+        public T PopMin()
+        {
+            T min = InternalPopMin();
+            _count--;
+            return min;
+        }
+        protected abstract T InternalPopMin();
 
         protected abstract void DeleteTreeElement(ref TreeElement treeElement);
 
@@ -390,21 +400,9 @@ namespace DataStructures.Trees.BinaryTrees
             return true;
         }
 
-        public void Dispose()
-        {
-            root = null;
-            _count = 0;
-        }
-
-        public void Clear()
-        {
-            root = null;
-            _count = 0;
-        }
-
         public void CopyTo(Array array, int index)
         {
-            foreach (T item in DefaultIterator)
+            foreach (T item in DefaultEnumerator)
             {
                 try
                 {
@@ -419,7 +417,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            foreach (T item in DefaultIterator)
+            foreach (T item in DefaultEnumerator)
             {
                 try
                 {
@@ -432,25 +430,17 @@ namespace DataStructures.Trees.BinaryTrees
             }
         }
 
-        public abstract IEnumerable<T> InOrder();
-        public abstract IEnumerable<T> PreOrder();
-        public abstract IEnumerable<T> PostOrder();
-        public abstract IEnumerable<T> BreadthFirst();
-        public abstract IEnumerable<T> DepthFirst();
-        public abstract void InOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void PreOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void PostOrder(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void BreadthFirst(ITraversableTree<T>.TraversaryDelegate method);
-        public abstract void DepthFirst(ITraversableTree<T>.TraversaryDelegate method);
-
-        public IEnumerator<T> GetEnumerator()
+        public void Dispose()
         {
-            return DefaultIterator.GetEnumerator();
+            root = null;
+            _count = 0;
+            GC.SuppressFinalize(this);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Clear()
         {
-            return DefaultIterator.GetEnumerator();
+            root = null;
+            _count = 0;
         }
     }
 }

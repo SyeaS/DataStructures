@@ -9,9 +9,15 @@ namespace DataStructures.Trees.BinaryTrees
 {
     public abstract class TreapTree<T, TComparableWrapper, TNumber> : RotatableBinarySearchTree<T, TreapTreeContent<T, TComparableWrapper, TNumber>>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
+        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
+        protected abstract class InOrderByPriorityData : IDataFactory<InOrderByPriorityData>
+        {
+            public abstract InOrderByPriorityData CreateEmpty();
+            public abstract void Initialize();
+        }
+
         protected TComparableWrapper Value { get; }
 
         public delegate TComparableWrapper RandomGenerator();
@@ -43,6 +49,7 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected abstract void FixTreeAfterInsertion(TreeElement treeElement);
         protected abstract void Remove(ref TreeElement treeElement);
+        public abstract IEnumerable<TComparableWrapper> InOrderByPriority();
 
         protected TComparableWrapper GetPriority(TreeElement treeElement)
         {
@@ -51,7 +58,8 @@ namespace DataStructures.Trees.BinaryTrees
 
         protected TComparableWrapper GetPriority(ref TreeElement treeElement)
         {
-            return treeElement is not null ? treeElement.TreeContent.Priority : Value;
+            return treeElement is not null ?
+                treeElement.TreeContent.Priority : Value;
         }
     }
 }

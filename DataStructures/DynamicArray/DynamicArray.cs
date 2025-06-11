@@ -96,15 +96,15 @@ namespace DataStructures.DynamicArray
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (T item in array)
+            for (int i = 0; i < Count; i++)
             {
-                yield return item;
+                yield return array[i];
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return this.GetEnumerator() as IEnumerator;
         }
 
         public T this[int index]

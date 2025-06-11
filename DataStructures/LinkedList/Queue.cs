@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataStructures.LinkedList
 {
-    public sealed class Queue<T> : SinglyLinkedList<T>, ILinear<T>
+    public sealed class Queue<T> : SinglyLinkedList<T>, IQueue<T>, ILinear<T>
     {
-        private ListElement tail;
+        private IListElement tail;
 
         public Queue()
         {
@@ -33,9 +33,9 @@ namespace DataStructures.LinkedList
 
         private void AddToQueue(ref T content)
         {
-            ListElement listElement = new ListElement(content);
+            IListElement listElement = new ListElement(ref content);
 
-            if (head == null)
+            if (Head == null)
             {
                 head = listElement;
             }
@@ -56,6 +56,11 @@ namespace DataStructures.LinkedList
             throw new NotSupportedException("The remove operation is not supported for Queue.");
         }
 
+        public override void RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
         public T Dequeue()
         {
             if (Count == 0)
@@ -63,7 +68,7 @@ namespace DataStructures.LinkedList
                 throw new EmptyLinkedListException();
             }
 
-            T content = head.Content;
+            T content = Head.Content;
 
             if (Count == 1)
             {
@@ -72,7 +77,7 @@ namespace DataStructures.LinkedList
             }
             else
             {
-                head = head.Next;
+                head = Head.Next;
             }
 
             Count--;
@@ -84,14 +89,14 @@ namespace DataStructures.LinkedList
             return Dequeue();
         }
 
-        public T Peek()
+        public T PeekFirst()
         {
-            if (head == null)
+            if (Head == null)
             {
                 throw new EmptyLinkedListException();
             }
 
-            return head.Content;
+            return Head.Content;
         }
     }
 }

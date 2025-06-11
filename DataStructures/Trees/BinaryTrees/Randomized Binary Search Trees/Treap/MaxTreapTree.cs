@@ -1,4 +1,6 @@
-﻿using DataStructures.Wrappers;
+﻿using DataStructures.Heaps;
+using DataStructures.PriorityQueue;
+using DataStructures.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace DataStructures.Trees.BinaryTrees
 {
     public sealed class MaxTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
+        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
         where TNumber : struct
     {
         public MaxTreapTree(RandomGenerator randomGenerator, TComparableWrapper minValue) : base(minValue, randomGenerator)
@@ -76,12 +78,7 @@ namespace DataStructures.Trees.BinaryTrees
             DeleteTreeElement(ref treeElement);
         }
 
-        public override T Pop(T content)
-        {
-            return InternalRemove(ref content).TreeContent.Content;
-        }
-
-        public override T PopMin()
+        protected override T InternalPopMin()
         {
             TreeElement treeElement = Minimum(root);
 
@@ -90,7 +87,7 @@ namespace DataStructures.Trees.BinaryTrees
             return treeElement.TreeContent.Content;
         }
 
-        public override T PopMax()
+        protected override T InternalPopMax()
         {
             TreeElement treeElement = Maximum(root);
 
@@ -102,8 +99,70 @@ namespace DataStructures.Trees.BinaryTrees
         public T PopMaxPriority()
         {
             T copy = root.TreeContent.Content;
-            Remove(ref root);
+            Remove(copy);
             return copy;
         }
+
+        public override IEnumerable<TComparableWrapper> InOrderByPriority()
+        {
+            BinaryMaxHeap<TComparableWrapper> maxHeap = new BinaryMaxHeap<TComparableWrapper>(this.Count);
+            
+            foreach (TreeElement treeElement in this.InternalPreOrder())
+            {
+                maxHeap.Add(treeElement.TreeContent.Priority);
+            }
+
+            int count = maxHeap.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return maxHeap.Extract();
+            }
+
+            /*if (Count == 0)
+            {
+                yield break;
+            }
+
+            MaxPriorityQueue<TupleWrapper> priorityQueue = new MaxPriorityQueue<TupleWrapper>();
+            TreeElement current = root;
+            yield return GetPriority(current);
+            SelectSmallest(ref current, ref priorityQueue);
+
+            while (!(priorityQueue.Count == 0 && current is null))
+            {
+
+            }*/
+        }
+
+        /*private void SelectSmallest(ref TreeElement treeElement, ref MaxPriorityQueue<TupleWrapper> priorityQueue)
+        {
+            if (treeElement.Right == null && treeElement.Left != null)
+            {
+                treeElement = treeElement.Left;
+            }
+            else if (treeElement.Left == null && treeElement.Right != null)
+            {
+                treeElement = treeElement.Right;
+            }
+
+            TComparableWrapper right = GetPriority(treeElement.Right);
+            TComparableWrapper left = GetPriority(treeElement.Left);
+            int value = right.CompareTo(left);
+
+            if (value > 0)
+            {
+                priorityQueue.Add(new TupleWrapper(treeElement.Left, left));
+                treeElement = treeElement.Right;
+            }
+            else if (value < 0)
+            {
+                priorityQueue.Add(new TupleWrapper(treeElement.Right, right));
+                treeElement = treeElement.Left;
+            }
+
+            // egyenlő
+            //return HandleDuplicates(ref treeElement, ref priorityQueue);
+        }*/
     }
 }

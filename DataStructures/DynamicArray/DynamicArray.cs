@@ -9,7 +9,8 @@ namespace DataStructures.DynamicArray
 {
     public sealed class DynamicArray<T> : ICollection<T>, ICollection
     {
-        private T[] array;
+		private const int FACTOR = 2;
+		private T[] array;
 
         private int Capacity => array.Length;
         private int _count;
@@ -90,7 +91,7 @@ namespace DataStructures.DynamicArray
         {
             if (_count == Capacity)
             {
-                Array.Resize(ref array, (Capacity - 1) * 2);
+                Array.Resize(ref array, (Capacity - 1) * FACTOR);
             }
         }
 

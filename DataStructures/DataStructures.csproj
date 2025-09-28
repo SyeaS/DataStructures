@@ -1,21 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
+		<RootNamespace>$(SolutionName)</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Heaps\Extensions\" />
-    <Folder Include="LinkedList\Probalistic LinkedLists\" />
-    <Folder Include="SkipList\Exceptions\" />
-    <Folder Include="SkipList\Extensions\" />
-    <Folder Include="SkipList\Interfaces\" />
-    <Folder Include="PriorityQueue\Abstract classes\" />
-    <Folder Include="PriorityQueue\Exceptions\" />
-    <Folder Include="PriorityQueue\Extensions\" />
-    <Folder Include="Trees\BinaryTrees\Extensions\" />
-    <Folder Include="HashTable\Extensions\" />
-    <Folder Include="Trees\MultiwayTrees\BTree\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Heaps\Extensions\" />
+		<Folder Include="LinkedList\Probalistic LinkedLists\" />
+		<Folder Include="SkipList\Exceptions\" />
+		<Folder Include="SkipList\Extensions\" />
+		<Folder Include="SkipList\Interfaces\" />
+		<Folder Include="PriorityQueue\Abstract classes\" />
+		<Folder Include="PriorityQueue\Exceptions\" />
+		<Folder Include="PriorityQueue\Extensions\" />
+		<Folder Include="Trees\BinaryTrees\Extensions\" />
+		<Folder Include="HashTable\Extensions\" />
+		<Folder Include="Trees\MultiwayTrees\BTree\" />
+	</ItemGroup>
 </Project>

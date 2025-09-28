@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
@@ -7,16 +7,39 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Heaps\Extensions\" />
-		<Folder Include="LinkedList\Probalistic LinkedLists\" />
-		<Folder Include="SkipList\Exceptions\" />
-		<Folder Include="SkipList\Extensions\" />
-		<Folder Include="SkipList\Interfaces\" />
-		<Folder Include="PriorityQueue\Abstract classes\" />
-		<Folder Include="PriorityQueue\Exceptions\" />
-		<Folder Include="PriorityQueue\Extensions\" />
-		<Folder Include="Trees\BinaryTrees\Extensions\" />
-		<Folder Include="HashTable\Extensions\" />
+	  <Compile Remove="HashTable\Extensions\**" />
+	  <Compile Remove="Heaps\Extensions\**" />
+	  <Compile Remove="LinkedList\Probalistic LinkedLists\**" />
+	  <Compile Remove="PriorityQueue\Abstract classes\**" />
+	  <Compile Remove="PriorityQueue\Exceptions\**" />
+	  <Compile Remove="PriorityQueue\Extensions\**" />
+	  <Compile Remove="SkipList\Exceptions\**" />
+	  <Compile Remove="SkipList\Extensions\**" />
+	  <Compile Remove="SkipList\Interfaces\**" />
+	  <Compile Remove="Trees\BinaryTrees\Extensions\**" />
+	  <EmbeddedResource Remove="HashTable\Extensions\**" />
+	  <EmbeddedResource Remove="Heaps\Extensions\**" />
+	  <EmbeddedResource Remove="LinkedList\Probalistic LinkedLists\**" />
+	  <EmbeddedResource Remove="PriorityQueue\Abstract classes\**" />
+	  <EmbeddedResource Remove="PriorityQueue\Exceptions\**" />
+	  <EmbeddedResource Remove="PriorityQueue\Extensions\**" />
+	  <EmbeddedResource Remove="SkipList\Exceptions\**" />
+	  <EmbeddedResource Remove="SkipList\Extensions\**" />
+	  <EmbeddedResource Remove="SkipList\Interfaces\**" />
+	  <EmbeddedResource Remove="Trees\BinaryTrees\Extensions\**" />
+	  <None Remove="HashTable\Extensions\**" />
+	  <None Remove="Heaps\Extensions\**" />
+	  <None Remove="LinkedList\Probalistic LinkedLists\**" />
+	  <None Remove="PriorityQueue\Abstract classes\**" />
+	  <None Remove="PriorityQueue\Exceptions\**" />
+	  <None Remove="PriorityQueue\Extensions\**" />
+	  <None Remove="SkipList\Exceptions\**" />
+	  <None Remove="SkipList\Extensions\**" />
+	  <None Remove="SkipList\Interfaces\**" />
+	  <None Remove="Trees\BinaryTrees\Extensions\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="Trees\MultiwayTrees\BTree\" />
 	</ItemGroup>
 </Project>

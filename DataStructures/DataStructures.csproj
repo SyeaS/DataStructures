@@ -16,5 +16,6 @@
     <Folder Include="PriorityQueue\Extensions\" />
     <Folder Include="Trees\BinaryTrees\Extensions\" />
     <Folder Include="HashTable\Extensions\" />
+    <Folder Include="Trees\MultiwayTrees\" />
   </ItemGroup>
 </Project>

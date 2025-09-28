@@ -9,12 +9,12 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
     public sealed class SplayTree<T> : RotatableBinarySearchTree<T, TreeContent<T>>
         where T : IComparable<T>
     {
-        protected override RotationCallBack CallBack { get; }
+        protected override RotationCallback Callback { get; }
         private TreeElement NewRoot { get; set; }
 
         public SplayTree()
         {
-            CallBack = new RotationCallBack(Rotation);
+            Callback = new RotationCallback(Rotation);
         }
 
         public SplayTree(IEnumerable<T> content) : this()

@@ -10,8 +10,8 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
         where T : IComparable<T>
         where TTreeContent : ITreeContent<T>, new()
     {
-        protected delegate void RotationCallBack(ref TreeElement newRoot, ref TreeElement oldRoot);
-        protected abstract RotationCallBack CallBack { get; }
+        protected delegate void RotationCallback(ref TreeElement newRoot, ref TreeElement oldRoot);
+        protected abstract RotationCallback Callback { get; }
 
         protected void RotateToRight(TreeElement treeElement)
         {
@@ -27,7 +27,7 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
             treeElement.Parent = newRoot;
             newRoot.Right = treeElement;
 
-            CallBack?.Invoke(ref newRoot, ref treeElement);
+            Callback?.Invoke(ref newRoot, ref treeElement);
 
             ConnectToTree(ref newRoot, ref copy, ref parent);
         }
@@ -47,7 +47,7 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
             treeElement.Parent = newRoot;
             newRoot.Left = treeElement;
 
-            CallBack?.Invoke(ref newRoot, ref treeElement);
+            Callback?.Invoke(ref newRoot, ref treeElement);
 
             ConnectToTree(ref newRoot, ref copy, ref parent);
         }

@@ -14,11 +14,11 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
     public sealed class RedBlackTree<T> : RotatableBinarySearchTree<T, RedBlackTreeContent<T>>
         where T : IComparable<T>
     {
-        protected override RotationCallBack CallBack { get; }
+        protected override RotationCallback Callback { get; }
 
         public RedBlackTree()
         {
-            CallBack = new RotationCallBack(Rotation);
+            Callback = new RotationCallback(Rotation);
         }
 
         public RedBlackTree(IEnumerable<T> content) : this()

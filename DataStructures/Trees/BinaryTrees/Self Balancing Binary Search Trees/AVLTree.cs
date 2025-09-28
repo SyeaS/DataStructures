@@ -9,11 +9,11 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
     public sealed class AVLTree<T> : RotatableBinarySearchTree<T, AVLTreeContent<T>>
         where T : IComparable<T>
     {
-        protected override RotationCallBack CallBack { get; }
+        protected override RotationCallback Callback { get; }
 
         public AVLTree()
         {
-            CallBack = new RotationCallBack(Rotation);
+            Callback = new RotationCallback(Rotation);
         }
 
         public AVLTree(IEnumerable<T> content) : this()

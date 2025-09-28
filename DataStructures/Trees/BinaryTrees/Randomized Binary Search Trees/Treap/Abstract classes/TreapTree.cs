@@ -21,7 +21,7 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 
         public delegate TComparableWrapper RandomGenerator();
         private RandomGenerator GenerateRandom { get; }
-        protected override RotationCallBack CallBack { get; }
+        protected override RotationCallback Callback { get; }
 
         protected TreapTree(TComparableWrapper value, RandomGenerator randomGenerator)
         {

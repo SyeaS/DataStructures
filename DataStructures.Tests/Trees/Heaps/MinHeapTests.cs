@@ -1,4 +1,4 @@
-﻿using DataStructures.Heaps;
+﻿using DataStructuresAndAlgorithms.Heaps;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests.Trees.Heaps
+namespace DataStructuresAndAlgorithms.Tests.Trees.Heaps
 {
     public class MinHeapTests
     {
@@ -46,7 +46,7 @@ namespace DataStructures.Tests.Trees.Heaps
         public void Add_TimerTest()
         {
             BinaryMinHeap<HeapData> minHeap = new BinaryMinHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMinHeapAddTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMinHeapAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -116,7 +116,7 @@ namespace DataStructures.Tests.Trees.Heaps
         public void Search_TimerTest()
         {
             BinaryMinHeap<HeapData> minHeap = new BinaryMinHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMinHeapSearchTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMinHeapSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -154,7 +154,7 @@ namespace DataStructures.Tests.Trees.Heaps
         public void Remove_TimerTest()
         {
             BinaryMinHeap<HeapData> minHeap = new BinaryMinHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\BinaryMinHeapRemoveTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMinHeapRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

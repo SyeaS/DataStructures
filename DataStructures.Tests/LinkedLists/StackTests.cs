@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using DataStructures.LinkedList;
+using DataStructuresAndAlgorithms.LinkedList;
 
-namespace DataStructures.Tests
+namespace DataStructuresAndAlgorithms.Tests
 {
     public class StackTests
     {
@@ -22,7 +22,7 @@ namespace DataStructures.Tests
         [InlineData(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
         public void RemoveTest(params int[] values)
         {
-            LinkedList.Stack<int> stack = new DataStructures.LinkedList.Stack<int>(values);
+            LinkedList.Stack<int> stack = new DataStructuresAndAlgorithms.LinkedList.Stack<int>(values);
 
             for (int i = values.Length - 1; i >= 0; i--)
             {

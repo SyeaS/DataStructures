@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public abstract class RotatableBinarySearchTree<T, TTreeContent> : AbstractBinarySearchTree<T, TTreeContent>
         where T : IComparable<T>

@@ -1,5 +1,5 @@
-﻿using DataStructures.Trees;
-using DataStructures.Trees.BinaryTrees;
+﻿using DataStructuresAndAlgorithms.Trees;
+using DataStructuresAndAlgorithms.Trees.BinaryTrees;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests
+namespace DataStructuresAndAlgorithms.Tests
 {
     public class RedBlackTreeTests
     {
@@ -32,7 +32,7 @@ namespace DataStructures.Tests
         public void Add_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RedBlackTreeAddTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -96,7 +96,7 @@ namespace DataStructures.Tests
         public void Search_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RedBlackTreeSearchTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -133,7 +133,7 @@ namespace DataStructures.Tests
         public void Remove_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\RedBlackTreeRemoveTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

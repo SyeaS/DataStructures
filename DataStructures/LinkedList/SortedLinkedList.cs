@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public sealed class SortedLinkedList<T> : DoublyLinkedList<T>
         where T : IComparable<T>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     // https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html#RBInsertFixup(redblacktreeproject.RedBlackNode)
     // http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/chap14.htm

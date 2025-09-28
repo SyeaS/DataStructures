@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataStructures.LinkedList;
+using DataStructuresAndAlgorithms.LinkedList;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public class BinarySearchTree<T> : AbstractBinarySearchTree<T, TreeContent<T>>
         where T : IComparable<T>

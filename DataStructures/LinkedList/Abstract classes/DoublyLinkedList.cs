@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public abstract class DoublyLinkedList<T> : LinkedList<T>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList.Exceptions
+namespace DataStructuresAndAlgorithms.LinkedList.Exceptions
 {
     public class EmptyLinkedListException : Exception
     {

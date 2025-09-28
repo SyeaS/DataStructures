@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <AssemblyName>DataStructures</AssemblyName>
+    <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public abstract partial class BinaryTree<T, TTreeContent>
     {

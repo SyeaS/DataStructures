@@ -1,11 +1,11 @@
-﻿using DataStructures.Heaps;
+﻿using DataStructuresAndAlgorithms.Heaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.PriorityQueue
+namespace DataStructuresAndAlgorithms.PriorityQueue
 {
     public class MinPriorityQueue<T> : IMinPriorityQueue<T>
         where T : class, IComparable<T>

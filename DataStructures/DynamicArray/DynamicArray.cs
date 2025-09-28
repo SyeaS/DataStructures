@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.DynamicArray
+namespace DataStructuresAndAlgorithms.DynamicArray
 {
     public sealed class DynamicArray<T> : ICollection<T>, ICollection
     {

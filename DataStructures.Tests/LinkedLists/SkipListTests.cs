@@ -1,4 +1,4 @@
-﻿using DataStructures.LinkedList;
+﻿using DataStructuresAndAlgorithms.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests.LinkedLists
+namespace DataStructuresAndAlgorithms.Tests.LinkedLists
 {
     public class SkipListTests
     {
@@ -69,7 +69,7 @@ namespace DataStructures.Tests.LinkedLists
         public void Add_TimerTest()
         {
             SkipList<int> randomizedSkipList = new SkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\SkipListAddTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SkipListAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -160,7 +160,7 @@ namespace DataStructures.Tests.LinkedLists
         public void Search_TimerTest()
         {
             SkipList<int> randomizedSkipList = new SkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\SkipListSearchTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SkipListSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -198,7 +198,7 @@ namespace DataStructures.Tests.LinkedLists
         public void Remove_TimerTest()
         {
             SkipList<int> randomizedSkipList = new SkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\SkipListRemoveTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SkipListRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

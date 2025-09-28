@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public sealed class SplayTree<T> : RotatableBinarySearchTree<T, TreeContent<T>>
         where T : IComparable<T>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public class Deque<T> : DoublyLinkedList<T>, IQueue<T>, IStack<T>
     {

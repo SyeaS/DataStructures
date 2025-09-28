@@ -1,5 +1,5 @@
-﻿using DataStructures.HashTable;
-using DataStructures.LinkedList;
+﻿using DataStructuresAndAlgorithms.HashTable;
+using DataStructuresAndAlgorithms.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;

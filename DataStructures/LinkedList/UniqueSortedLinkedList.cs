@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public sealed class UniqueSortedLinkedList<T> : DoublyLinkedList<T>
         where T : IComparable<T>

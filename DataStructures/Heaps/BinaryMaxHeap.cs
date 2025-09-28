@@ -1,11 +1,11 @@
-﻿using DataStructures.Heaps.Exceptions;
+﻿using DataStructuresAndAlgorithms.Heaps.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Heaps
+namespace DataStructuresAndAlgorithms.Heaps
 {
     public sealed class BinaryMaxHeap<T> : BinaryHeap<T>
         where T : class, IComparable<T>

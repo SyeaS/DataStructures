@@ -1,5 +1,5 @@
-﻿using DataStructures.Trees.BinaryTrees;
-using DataStructures.Wrappers.Numerics;
+﻿using DataStructuresAndAlgorithms.Trees.BinaryTrees;
+using DataStructuresAndAlgorithms.Wrappers.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests.Trees
+namespace DataStructuresAndAlgorithms.Tests.Trees
 {
     public class MinTreapTreeTests
     {
@@ -143,7 +143,7 @@ namespace DataStructures.Tests.Trees
         public void Add_TimerTest()
         {
             MinTreapTree<double, DoubleWrapper, double> treapTree = new MinTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MaxValue));
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\MinTreapTreeAddTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -207,7 +207,7 @@ namespace DataStructures.Tests.Trees
         public void Search_TimerTest()
         {
             MinTreapTree<double, DoubleWrapper, double> treapTree = new MinTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MaxValue));
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\MinTreapTreeSearchTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -245,7 +245,7 @@ namespace DataStructures.Tests.Trees
         public void Remove_TimerTest()
         {
             MinTreapTree<double, DoubleWrapper, double> treapTree = new MinTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MaxValue));
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\MinTreapTreeRemoveTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

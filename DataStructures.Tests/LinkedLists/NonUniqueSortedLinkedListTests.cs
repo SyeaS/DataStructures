@@ -1,4 +1,4 @@
-﻿using DataStructures.LinkedList;
+﻿using DataStructuresAndAlgorithms.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests
+namespace DataStructuresAndAlgorithms.Tests
 {
     public class NonUniqueSortedLinkedListTests
     {

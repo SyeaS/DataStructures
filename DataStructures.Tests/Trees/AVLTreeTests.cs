@@ -1,5 +1,5 @@
-﻿using DataStructures.Trees;
-using DataStructures.Trees.BinaryTrees;
+﻿using DataStructuresAndAlgorithms.Trees;
+using DataStructuresAndAlgorithms.Trees.BinaryTrees;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DataStructures.Tests
+namespace DataStructuresAndAlgorithms.Tests
 {
     public class AVLTreeTests
     {
@@ -31,7 +31,7 @@ namespace DataStructures.Tests
         public void Add_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\AVLTreeAddTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -95,7 +95,7 @@ namespace DataStructures.Tests
         public void Search_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\AVLTreeSearchTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -133,7 +133,7 @@ namespace DataStructures.Tests
         public void Remove_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructures\AVLTreeRemoveTest.txt";
+            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

@@ -1,11 +1,11 @@
-﻿using DataStructures.LinkedList.Exceptions;
+﻿using DataStructuresAndAlgorithms.LinkedList.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public sealed class Queue<T> : SinglyLinkedList<T>, IQueue<T>, ILinear<T>
     {

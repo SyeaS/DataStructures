@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public class AVLTreeContent<T> : TreeContent<T>, IAVLTreeContent<T>
         where T : IComparable<T>

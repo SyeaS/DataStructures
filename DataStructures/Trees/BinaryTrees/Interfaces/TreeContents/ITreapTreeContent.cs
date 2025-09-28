@@ -1,11 +1,11 @@
-﻿using DataStructures.Wrappers;
+﻿using DataStructuresAndAlgorithms.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public interface ITreapTreeContent<T, TComparableWrapper, TNumber> : ITreeContent<T>
         where T : IComparable<T>

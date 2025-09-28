@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Tests.Trees.Heaps
+namespace DataStructuresAndAlgorithms.Tests.Trees.Heaps
 {
     public class HeapData : IComparable<HeapData>
     {

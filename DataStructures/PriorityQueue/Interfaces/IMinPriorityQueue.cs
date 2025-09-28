@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.PriorityQueue
+namespace DataStructuresAndAlgorithms.PriorityQueue
 {
     public interface IMinPriorityQueue<T>
         where T : IComparable<T>

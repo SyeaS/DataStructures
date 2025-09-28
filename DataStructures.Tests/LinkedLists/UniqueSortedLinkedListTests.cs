@@ -1,4 +1,4 @@
-using DataStructures.LinkedList;
+using DataStructuresAndAlgorithms.LinkedList;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;

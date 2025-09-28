@@ -1,11 +1,11 @@
-﻿using DataStructures.LinkedList.Exceptions;
+﻿using DataStructuresAndAlgorithms.LinkedList.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.LinkedList
+namespace DataStructuresAndAlgorithms.LinkedList
 {
     public class Stack<T> : SinglyLinkedList<T>, IStack<T>, ILinear<T>
     {

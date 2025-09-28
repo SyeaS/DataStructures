@@ -1,4 +1,4 @@
-﻿using DataStructures.LinkedList;
+﻿using DataStructuresAndAlgorithms.LinkedList;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.HashTable
+namespace DataStructuresAndAlgorithms.HashTable
 {
     public sealed class HashTable<T, K> : ICollection, IEnumerable<T>
         where T : IComparable<T>

@@ -1,6 +1,6 @@
-﻿using DataStructures.Heaps.Exceptions;
-using DataStructures.Heaps.Interfaces;
-using DataStructures.Trees.BinaryTrees;
+﻿using DataStructuresAndAlgorithms.Heaps.Exceptions;
+using DataStructuresAndAlgorithms.Heaps.Interfaces;
+using DataStructuresAndAlgorithms.Trees.BinaryTrees;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Heaps
+namespace DataStructuresAndAlgorithms.Heaps
 {
     /* A binary heap is defined as a binary tree with two additional constraints:
      * 

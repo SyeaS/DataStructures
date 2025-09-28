@@ -1,4 +1,4 @@
-﻿namespace DataStructures.LinkedList
+﻿namespace DataStructuresAndAlgorithms.LinkedList
 {
     public enum OrderingMode
     {

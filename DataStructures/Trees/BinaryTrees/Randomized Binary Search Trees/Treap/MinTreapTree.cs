@@ -1,12 +1,12 @@
-﻿using DataStructures.Heaps;
-using DataStructures.Wrappers;
+﻿using DataStructuresAndAlgorithms.Heaps;
+using DataStructuresAndAlgorithms.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public sealed class MinTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
         where T : IComparable<T>

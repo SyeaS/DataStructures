@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataStructures.Trees.BinaryTrees
+namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
     public interface ITreeElement<T>
         where T : IComparable<T>

@@ -1,12 +1,12 @@
-﻿using DataStructures.LinkedList;
-using DataStructures.Trees.BinaryTrees;
+﻿using DataStructuresAndAlgorithms.LinkedList;
+using DataStructuresAndAlgorithms.Trees.BinaryTrees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStructures.PriorityQueue
+namespace DataStructuresAndAlgorithms.PriorityQueue
 {
     public class PriorityQueue<T> : IPriorityQueue<T>
         where T : IComparable<T>

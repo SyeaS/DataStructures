@@ -31,7 +31,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Add_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeAddTest.txt";
+            Directory.CreateDirectory("AVLTree");
+            string path = @"AVLTree\AVLTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -95,7 +96,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Search_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeSearchTest.txt";
+            Directory.CreateDirectory("AVLTree");
+            string path = @"AVLTree\AVLTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -133,7 +135,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Remove_TimerTest()
         {
             AVLTree<int> AVLTree = new AVLTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\AVLTreeRemoveTest.txt";
+            Directory.CreateDirectory("AVLTree");
+            string path = @"AVLTree\AVLTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

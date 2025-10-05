@@ -136,7 +136,8 @@ namespace SortedPlayerQueue.Tests
         public void Add_TimerTest()
         {
             BinarySearchTree<int> AVLTree = new BinarySearchTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinarySearchTreeAddTest.txt";
+            Directory.CreateDirectory("BinarySearchTree");
+            string path = @"BinarySearchTree\BinarySearchTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -200,7 +201,8 @@ namespace SortedPlayerQueue.Tests
         public void Search_TimerTest()
         {
             BinarySearchTree<int> AVLTree = new BinarySearchTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinarySearchTreeSearchTest.txt";
+            Directory.CreateDirectory("BinarySearchTree");
+            string path = @"BinarySearchTree\BinarySearchTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -238,7 +240,8 @@ namespace SortedPlayerQueue.Tests
         public void Remove_TimerTest()
         {
             BinarySearchTree<int> AVLTree = new BinarySearchTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinarySearchTreeRemoveTest.txt";
+            Directory.CreateDirectory("BinarySearchTree");
+            string path = @"BinarySearchTree\BinarySearchTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

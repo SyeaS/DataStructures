@@ -128,7 +128,8 @@ namespace DataStructuresAndAlgorithms.Tests.LinkedLists
         public void Add_TimerTest()
         {
             IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\IndexableSkipListAddTest.txt";
+            Directory.CreateDirectory("IndexableSkipList");
+            string path = @"IndexableSkipList\IndexableSkipListAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -192,7 +193,8 @@ namespace DataStructuresAndAlgorithms.Tests.LinkedLists
         public void Search_TimerTest()
         {
             IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\IndexableSkipListSearchTest.txt";
+            Directory.CreateDirectory("IndexableSkipList");
+            string path = @"IndexableSkipList\IndexableSkipListSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -230,7 +232,8 @@ namespace DataStructuresAndAlgorithms.Tests.LinkedLists
         public void Remove_TimerTest()
         {
             IndexableSkipList<int> indexableSkipList = new IndexableSkipList<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\IndexableSkipListRemoveTest.txt";
+            Directory.CreateDirectory("IndexableSkipList");
+            string path = @"IndexableSkipList\IndexableSkipListRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

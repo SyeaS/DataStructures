@@ -136,7 +136,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Add_TimerTest()
         {
             SplayTree<int> SplayTree = new SplayTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SplayTreeAddTest.txt";
+            Directory.CreateDirectory("SplayTree");
+			string path = @"SplayTree\SplayTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -200,7 +201,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Search_TimerTest()
         {
             SplayTree<int> SplayTree = new SplayTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SplayTreeSearchTest.txt";
+			Directory.CreateDirectory("SplayTree");
+			string path = @"SplayTree\SplayTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -238,8 +240,9 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Remove_TimerTest()
         {
             SplayTree<int> SplayTree = new SplayTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\SplayTreeRemoveTest.txt";
-            File.Delete(path);
+            Directory.CreateDirectory("SplayTree");
+            string path = @"SplayTree\SplayTreeRemoveTest.txt";
+			File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
             {

@@ -142,7 +142,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Add_TimerTest()
         {
             MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeAddTest.txt";
+            Directory.CreateDirectory("MaxTreapTree");
+            string path = @"MaxTreapTree\MaxTreapTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -206,7 +207,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Search_TimerTest()
         {
             MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeSearchTest.txt";
+            Directory.CreateDirectory("MaxTreapTree");
+            string path = @"MaxTreapTree\MaxTreapTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -244,7 +246,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Remove_TimerTest()
         {
             MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeRemoveTest.txt";
+            Directory.CreateDirectory("MaxTreapTree");
+            string path = @"MaxTreapTree\MaxTreapTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

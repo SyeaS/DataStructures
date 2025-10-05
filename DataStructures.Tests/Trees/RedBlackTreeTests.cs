@@ -32,7 +32,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Add_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeAddTest.txt";
+            Directory.CreateDirectory("RedBlackTree");
+            string path = @"RedBlackTree\RedBlackTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -96,7 +97,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Search_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeSearchTest.txt";
+            Directory.CreateDirectory("RedBlackTree");
+            string path = @"RedBlackTree\RedBlackTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -133,7 +135,8 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Remove_TimerTest()
         {
             RedBlackTree<int> RBTree = new RedBlackTree<int>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\RedBlackTreeRemoveTest.txt";
+            Directory.CreateDirectory("RedBlackTree");
+            string path = @"RedBlackTree\RedBlackTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

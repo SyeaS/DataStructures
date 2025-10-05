@@ -142,7 +142,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Add_TimerTest()
         {
             MinTreapTree<double, double> treapTree = new MinTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeAddTest.txt";
+            Directory.CreateDirectory("MinTreapTree");
+            string path = @"MinTreapTree\MinTreapTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -206,7 +207,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Search_TimerTest()
         {
             MinTreapTree<double, double> treapTree = new MinTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeSearchTest.txt";
+            Directory.CreateDirectory("MinTreapTree");
+            string path = @"MinTreapTree\MinTreapTreeSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -244,7 +246,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         public void Remove_TimerTest()
         {
             MinTreapTree<double, double> treapTree = new MinTreapTree<double, double>(GetRandom);
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MinTreapTreeRemoveTest.txt";
+            Directory.CreateDirectory("MinTreapTree");
+            string path = @"MinTreapTree\MinTreapTreeRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

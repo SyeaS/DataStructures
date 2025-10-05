@@ -46,7 +46,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees.Heaps
         public void Add_TimerTest()
         {
             BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMaxHeapAddTest.txt";
+            Directory.CreateDirectory("MaxHeap");
+            string path = @"MaxHeap\BinaryMaxHeapAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
             DateTime startTime = DateTime.Now;
@@ -110,7 +111,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees.Heaps
         public void Search_TimerTest()
         {
             BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMaxHeapSearchTest.txt";
+            Directory.CreateDirectory("MaxHeap");
+            string path = @"MaxHeap\BinaryMaxHeapSearchTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)
@@ -148,7 +150,8 @@ namespace DataStructuresAndAlgorithms.Tests.Trees.Heaps
         public void Remove_TimerTest()
         {
             BinaryMaxHeap<HeapData> maxHeap = new BinaryMaxHeap<HeapData>();
-            string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\BinaryMaxHeapRemoveTest.txt";
+            Directory.CreateDirectory("MaxHeap");
+            string path = @"MaxHeap\BinaryMaxHeapRemoveTest.txt";
             File.Delete(path);
 
             for (int i = 0; i < 100000; i++)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataStructuresAndAlgorithms.Heaps
 {
     public sealed class BinaryMinHeap<T> : BinaryHeap<T>
-        where T : class, IComparable<T>
+        where T : IComparable<T>
     {
         public BinaryMinHeap()
         {
@@ -69,7 +69,7 @@ namespace DataStructuresAndAlgorithms.Heaps
 
             if (Count == 1)
             {
-                tree[0] = null;
+                tree[0] = default(T?);
                 return content;
             }
 

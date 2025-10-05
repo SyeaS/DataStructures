@@ -12,27 +12,11 @@ namespace DataStructuresAndAlgorithms.Tests
 {
     public class NonUniqueSortedLinkedListTests
     {
-        static Comparison<User> comparer = new Comparison<User>(Comparer);
-
-        private static int Comparer(User x, User y)
-        {
-            if (x.Priority == y.Priority && x.SID == y.SID)
-            {
-                return 0;
-            }
-            else if (x.Priority > y.Priority)
-            {
-                return 1;
-            }
-
-            return -1;
-        }
-
         [Theory]
         [InlineData(0f, 0f, 10f, 5f, 2f, 7f, 2f, 0f, 61f, 1f, 6f, 2f)]
         public void Add_ShouldWork(params float[] values)
         {
-            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(UserFactory(values), comparer, (OrderingMode)new Random().Next(0, 2));
+            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(UserFactory(values), (OrderingMode)new Random().Next(0, 2));
 
             float[] floats = new float[2] { float.NaN, float.NaN };
             foreach (User item in linkedList)
@@ -71,7 +55,7 @@ namespace DataStructuresAndAlgorithms.Tests
         public void Remove_ShouldWork(params float[] values)
         {
             IEnumerable<User> users = UserFactory(values);
-            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(users, comparer, (OrderingMode)new Random().Next(0, 2));
+            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(users, (OrderingMode)new Random().Next(0, 2));
 
             foreach (User item in users)
             {
@@ -90,7 +74,7 @@ namespace DataStructuresAndAlgorithms.Tests
         [InlineData(0f, 0f, 10f, 5f, 2f, 7f, 2f, 0f, 61f, 1f, 6f, 2f)]
         public void Remove_ShouldntWork(params float[] values)
         {
-            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(UserFactory(values), comparer, (OrderingMode)new Random().Next(0, 2)); ;
+            SortedLinkedList<User> linkedList = new SortedLinkedList<User>(UserFactory(values), (OrderingMode)new Random().Next(0, 2)); ;
 
             foreach (float value in values)
             {

@@ -1,5 +1,4 @@
 ﻿using DataStructuresAndAlgorithms.Trees.BinaryTrees;
-using DataStructuresAndAlgorithms.Wrappers.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +18,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void Add_ShouldWork(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -37,7 +36,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
 
             Assert.Throws<DuplicateTreeElementException>(() =>
             {
-                new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue)).Add(vals[0]);
+                new MaxTreapTree<double, double>(values, GetRandom).Add(vals[0]);
             });
         }
 
@@ -45,7 +44,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void Remove_ShouldWork(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -64,7 +63,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void Remove_ShouldThrowException(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -79,7 +78,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void InOrderTest(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
             List<double> inorder = new List<double>();
             treapTree.InOrder((item) => { inorder.Add(item); });
 
@@ -95,7 +94,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void PreOrderTest(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
             List<double> preorder = new List<double>();
             treapTree.PreOrder((item) => { preorder.Add(item); });
 
@@ -111,7 +110,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void PostOrderTest(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
             List<double> postorder = new List<double>();
             treapTree.PostOrder((item) => { postorder.Add(item); });
 
@@ -127,7 +126,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [InlineData(55.52d, 24.562d, 1.63d, 0.006d, 7.3421d, 89.221d, 62.5d, 16.73d, 78.61d, 81.701d)]
         public void BreadthFirstTest(params double[] values)
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(values, GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(values, GetRandom);
             List<double> breadthFirst = new List<double>();
             treapTree.BreadthFirst((item) => { breadthFirst.Add(item); });
 
@@ -142,7 +141,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [Fact]
         public void Add_TimerTest()
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeAddTest.txt";
             File.Delete(path);
             StringBuilder fileBuilder = new StringBuilder();
@@ -206,7 +205,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [Fact]
         public void Search_TimerTest()
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeSearchTest.txt";
             File.Delete(path);
 
@@ -244,7 +243,7 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
         [Fact]
         public void Remove_TimerTest()
         {
-            MaxTreapTree<double, DoubleWrapper, double> treapTree = new MaxTreapTree<double, DoubleWrapper, double>(GetRandom, new DoubleWrapper(double.MinValue));
+            MaxTreapTree<double, double> treapTree = new MaxTreapTree<double, double>(GetRandom);
             string path = @"D:\DefaultPrograms\Programs\C#\DataStructuresAndAlgorithms\MaxTreapTreeRemoveTest.txt";
             File.Delete(path);
 
@@ -278,9 +277,9 @@ namespace DataStructuresAndAlgorithms.Tests.Trees
             File.WriteAllText(path, file.ToString());
         }
 
-        public DoubleWrapper GetRandom()
+        public double GetRandom()
         {
-            return new DoubleWrapper(random.NextDouble() + random.Next(int.MaxValue));
+            return random.NextDouble() + random.Next(int.MaxValue);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace DataStructuresAndAlgorithms.Heaps
     */
 
     public abstract class BinaryHeap<T> : IBinaryHeap<T>
-        where T : class, IComparable<T>
+        where T : IComparable<T>
     {
         protected int Capacity => tree.Length;
         protected int CurrentIndex { get; set; }
@@ -38,7 +38,7 @@ namespace DataStructuresAndAlgorithms.Heaps
         public bool IsSynchronized => false;
         public object SyncRoot { get; } = new object();
 
-        protected T[] tree;
+		protected T?[] tree;
 
         public BinaryHeap()
         {

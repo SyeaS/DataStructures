@@ -1,17 +1,16 @@
-﻿using DataStructuresAndAlgorithms.Wrappers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
-    public interface ITreapTreeContent<T, TComparableWrapper, TNumber> : ITreeContent<T>
+    public interface ITreapTreeContent<T, TNumber> : ITreeContent<T>
         where T : IComparable<T>
-        where TComparableWrapper : IComparableWrapper<TNumber>
-        where TNumber : struct
-    {
-        TComparableWrapper Priority { get; }
+        where TNumber : struct, INumber<TNumber>, IMinMaxValue<TNumber>
+	{
+        TNumber Priority { get; }
     }
 }

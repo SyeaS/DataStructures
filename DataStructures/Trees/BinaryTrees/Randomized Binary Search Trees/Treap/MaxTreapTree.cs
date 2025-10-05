@@ -1,25 +1,24 @@
 ﻿using DataStructuresAndAlgorithms.Heaps;
 using DataStructuresAndAlgorithms.PriorityQueue;
-using DataStructuresAndAlgorithms.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
 {
-    public sealed class MaxTreapTree<T, TComparableWrapper, TNumber> : TreapTree<T, TComparableWrapper, TNumber>
+    public sealed class MaxTreapTree<T, TNumber> : TreapTree<T, TNumber>
         where T : IComparable<T>
-        where TComparableWrapper : AbstractWrapper<TNumber>, IComparableWrapper<TNumber>
-        where TNumber : struct
+        where TNumber : struct, INumber<TNumber>, IMinMaxValue<TNumber>
     {
-        public MaxTreapTree(RandomGenerator randomGenerator, TComparableWrapper minValue) : base(minValue, randomGenerator)
+        public MaxTreapTree(RandomGenerator randomGenerator) : base(TNumber.MinValue, randomGenerator)
         {
 
         }
 
-        public MaxTreapTree(IEnumerable<T> content, RandomGenerator randomGenerator, TComparableWrapper minValue) : base(minValue, randomGenerator)
+        public MaxTreapTree(IEnumerable<T> content, RandomGenerator randomGenerator) : base(TNumber.MinValue, randomGenerator)
         {
             base.CreateFromIEnumerable(ref content);
         }
@@ -44,14 +43,14 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
                 if (treeElement.Parent.Right == treeElement)
                 {
 
-                    if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent).Value) >= 0)
+                    if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent)) >= 0)
                     {
                         RotateToLeft(treeElement.Parent);
                     }
                 }
                 else
                 {
-                    if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent).Value) >= 0)
+                    if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent)) >= 0)
                     {
                         RotateToRight(treeElement.Parent);
                     }
@@ -65,7 +64,7 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
         {
             while (!(treeElement.Right == null || treeElement.Left == null))
             {
-                if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent).Value) <= 0)
+                if (GetPriority(ref treeElement).CompareTo(GetPriority(treeElement.Parent)) <= 0)
                 {
                     RotateToLeft(treeElement);
                 }
@@ -103,9 +102,9 @@ namespace DataStructuresAndAlgorithms.Trees.BinaryTrees
             return copy;
         }
 
-        public override IEnumerable<TComparableWrapper> InOrderByPriority()
+        public override IEnumerable<TNumber> InOrderByPriority()
         {
-            BinaryMaxHeap<TComparableWrapper> maxHeap = new BinaryMaxHeap<TComparableWrapper>(this.Count);
+            BinaryMaxHeap<TNumber> maxHeap = new BinaryMaxHeap<TNumber>(this.Count);
             
             foreach (TreeElement treeElement in this.InternalPreOrder())
             {
